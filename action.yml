@@ -1,6 +1,10 @@
 name: Fastlane Action
 description: An action for executing fastlane lanes
 author: 'maierj'
+inputs:
+  lane:
+    description: 'The lane that should be executed'
+    required: true
 runs:
   using: node12
   main: main.js
