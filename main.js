@@ -7,7 +7,9 @@ function run() {
 
         console.log(`Executing lane ${lane}.`);
 
-        shell.exec(`fastlane ${lane}`);
+        if (shell.exec(`fastlane ${lane}`).code !== 0) {
+            core.setFailed(`Executing lane ${lane} failed.`);
+        }
     } catch (error) {
         core.error(error);
         core.setFailed(error.message);
