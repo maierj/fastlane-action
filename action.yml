@@ -1,4 +1,4 @@
-name: Fastlane
+name: Fastlane Action
 description: An action for executing fastlane lanes
 author: 'maierj'
 branding:
