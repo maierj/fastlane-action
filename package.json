@@ -1,0 +1,19 @@
+{
+  "name": "de.maierjonas.github-fastlane-action",
+  "version": "1.0.0",
+  "description": "A github action for executing fastlane lanes",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maierj/fastlane-action.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maierj/fastlane-action/issues"
+  },
+  "homepage": "https://github.com/maierj/fastlane-action#readme"
+}
