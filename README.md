@@ -10,6 +10,6 @@ This action executes the lane that is passed.
 
 ## Example usage
 
-uses: actions/github-fastlane-action@master
+uses: actions/fastlane-action@master
 with:
   lane: 'beta'
