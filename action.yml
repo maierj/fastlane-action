@@ -1,0 +1,6 @@
+name: Fastlane Action
+description: An action for executing fastlane lanes
+author: 'maierj'
+runs:
+  using: node12
+  main: main.js
