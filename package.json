@@ -1,8 +1,8 @@
 {
-  "name": "de.maierjonas.github-fastlane-action",
+  "name": "de.maierjonas.fastlane-action",
   "version": "1.0.0",
   "description": "A github action for executing fastlane lanes",
-  "main": "src/main.js",
+  "main": "main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maierj/fastlane-action.git"
