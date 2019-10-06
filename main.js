@@ -15,9 +15,12 @@ function run() {
             }
 
             if (fs.existsSync(`${process.cwd()}/${subdirectory}`)) {
-                shell.exec(`cd ${subdirectory}`);
+                console.log(`Moving to subdirectory ${subdirectory}`);
+                if (shell.exec(`cd ${subdirectory}`).code !== 0) {
+                    setFailed(new Error(`Moving to subdirectory ${subdirectory} failed.`));
+                }
             } else {
-                setFailed(new Error("Specified subdirectory does not exist."));
+                setFailed(new Error(`Specified subdirectory ${subdirectory} does not exist.`));
             }
         }
 
