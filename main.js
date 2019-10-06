@@ -7,10 +7,7 @@ function run() {
 
         console.log(`Executing lane ${lane}.`);
 
-        shell.exec('echo $PWD');
-        shell.ls().forEach(function (file) {
-            console.log(file);
-        });
+        shell.exec(`fastlane ${lane}`);
     } catch (error) {
         core.error(error);
         core.setFailed(error.message);
