@@ -8,22 +8,41 @@ This action executes the lane that is passed.
 
 **Required** The lane that should be executed.
 
+### `options`
+
+**Optional** The options that should be passed as arguments to the lane. The options should be serialized as a JSON object.
+
 ### `subdirectory`
 
 **Optional** The relative path from the project root to the subdirectory where the fastlane folder is located.
 
 ## Example usage
 
+Basic usage for executing a lane in the root directory without arguments.
+
 ```
-uses: maierj/fastlane-action@v0.9.4
+uses: maierj/fastlane-action@v0.9.5
 with:
   lane: 'beta'
 ```
-
-or
+\
+Usage for executing a lane in the root directory with arguments.
+For a lane called `beta` to be called like
+```
+fastlane beta option1:value1 option2:value2
+```
+the workflow step should look like
+```
+uses: maierj/fastlane-action@v0.9.5
+with:
+  lane: 'beta'
+  options: '{ "option1": "value1", "option2": "value2" }'
+```
+\
+Usage for executing a lane in a context where the fastlane folder is in a subdirectory called `ios`.
 
 ```
-uses: maierj/fastlane-action@v0.9.4
+uses: maierj/fastlane-action@v0.9.5
 with:
   lane: 'beta'
   subdirectory: 'ios'
