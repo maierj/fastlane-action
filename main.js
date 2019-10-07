@@ -45,7 +45,7 @@ function run() {
         }
 
         let fastlaneExecutionResult;
-        if (options.length === 0) {
+        if (fastlaneOptions.length === 0) {
             fastlaneExecutionResult = shell.exec(`fastlane ${lane}`);
         } else {
             fastlaneExecutionResult = shell.exec(`fastlane ${lane} ${fastlaneOptions.join(" ")}`);
