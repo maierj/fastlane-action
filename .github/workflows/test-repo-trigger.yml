@@ -7,6 +7,6 @@ jobs:
     steps:
       - name: Create dispatch event
         uses: actions/github-script@0.2.0
-          with:
-            github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
-            script: github.repos.createDispatchEvent({ 'maierj', 'fastlane-action-test', 'workflow_trigger' })
+        with:
+          github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
+          script: github.repos.createDispatchEvent({ 'maierj', 'fastlane-action-test', 'workflow_trigger' })
