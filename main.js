@@ -38,10 +38,10 @@ function run() {
             deserializedOptions = {};
         }
 
-        const supposedGemfilePath = "./Gemfile";
+        const supposedGemfilePath = `${process.cwd()}/Gemfile`;
         let fastlaneCommand;
         if (fs.existsSync(supposedGemfilePath)) {
-            installBundlerIfNeeded();
+            installBundleDependencies(supposedGemfilePath);
 
             fastlaneCommand = "bundle exec fastlane";
         } else {
@@ -70,19 +70,33 @@ function run() {
     }
 }
 
-function installUsingRubyGems(packageName) {
-    if (!shell.which("gem")) {
-        const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
-        const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
-        core.addPath(rubyBinaryDirectory);
-    }
+function installBundleDependencies(pathToGemFile) {
+    installBundlerIfNeeded();
 
-    shell.exec(`gem install ${packageName}`);
+    const initialDirectory = process.cwd();
+    const pathToGemFileFolder = pathToGemFile.split("/").slice(0, -1).join("/");
+    shell.cd(pathToGemFileFolder);
+    shell.exec("gem install");
+    shell.cd(initialDirectory);
 }
 
 function installBundlerIfNeeded() {
     if (!shell.which('bundle')) {
         installUsingRubyGems("bundler");
+    }
+}
+
+function installUsingRubyGems(packageName) {
+    setupRubyGemsIfNecessary();
+
+    shell.exec(`gem install ${packageName}`);
+}
+
+function setupRubyGemsIfNecessary() {
+    if (!shell.which("gem")) {
+        const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
+        const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
+        core.addPath(rubyBinaryDirectory);
     }
 }
 
