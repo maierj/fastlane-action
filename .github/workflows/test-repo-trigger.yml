@@ -10,4 +10,4 @@ jobs:
         with:
           github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
           script: |
-            github.request('POST /repos/:owner/:repo/dispatches', { owner: 'maierj', repo: 'fastlane-action-test', mediaType: { previews: ['everest'] }, event_type: 'workflow_trigger' })
+            await github.request('POST /repos/:owner/:repo/dispatches', { owner: 'maierj', repo: 'fastlane-action-test', mediaType: { previews: ['everest'] }, event_type: 'workflow_trigger' })
