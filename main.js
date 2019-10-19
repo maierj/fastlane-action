@@ -40,9 +40,7 @@ function run() {
         const supposedGemfilePath = "./Gemfile";
         let fastlaneCommand;
         if (fs.existsSync(supposedGemfilePath)) {
-            if (!shell.which('bundle')) {
-                shell.exec("gem install bundler");
-            }
+            installBundlerIfNeeded();
 
             fastlaneCommand = "bundle exec fastlane";
         } else {
@@ -68,6 +66,31 @@ function run() {
         }
     } catch (error) {
         setFailed(error);
+    }
+}
+
+function isUbuntu() {
+    return process.env.RUNNER_OS === "ubuntu"
+}
+
+function isMacOS() {
+    return process.env.RUNNER_OS === "macOS"
+}
+
+function installRubyGemsIfNeeded() {
+    if (!shell.which('gem')) {
+        if (isUbuntu()) {
+            shell.exec("sudo apt-get install -y rubygems");
+        } else {
+            // TODO Install on macOS
+        }
+    }
+}
+
+function installBundlerIfNeeded() {
+    if (!shell.which('bundle')) {
+        installRubyGemsIfNeeded();
+        shell.exec("gem install bundler");
     }
 }
 
