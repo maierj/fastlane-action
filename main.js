@@ -70,7 +70,7 @@ function run() {
 }
 
 function isUbuntu() {
-    return process.env.RUNNER_OS === "ubuntu"
+    return process.env.RUNNER_OS === "Linux"
 }
 
 function isMacOS() {
