@@ -10,4 +10,4 @@ jobs:
         with:
           github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
           script: |
-            github.request('POST /repos/maierj/fastlane-action-test/dispatches', headers: { Accept: 'application/vnd.github.everest-preview+json' })
+            github.request('POST /repos/maierj/fastlane-action-test/dispatches', { headers: { Accept: 'application/vnd.github.everest-preview+json' } })
