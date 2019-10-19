@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const tc = require('@actions/tool-cache');
 const shell = require('shelljs');
 const fs = require('fs');
 
@@ -72,8 +73,8 @@ function run() {
 function installUsingRubyGems(packageName) {
     let gemPath = shell.which("gem");
     if (!gemPath) {
-        const rubyPath = shell.which("ruby");
-        gemPath = rubyPath.split("/").slice(0, -1).join("/") + "/gem";
+        const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
+        gemPath = rubyInstallationDirectory + "/bin/gem";
     }
 
     shell.exec(`${gemPath} install ${packageName}`);
