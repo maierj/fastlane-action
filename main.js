@@ -8,7 +8,7 @@ function run() {
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
 
-        console.log(`Executing lane ${lane}.`);
+        console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
         if (subdirectory) {
             if (subdirectory.startsWith("/")) {
