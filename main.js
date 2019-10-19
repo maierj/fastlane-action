@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const tc = require('@actions/tool-cache');
 const shell = require('shelljs');
 const fs = require('fs');
 
@@ -8,7 +9,7 @@ function run() {
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
 
-        console.log(`Executing lane ${lane}.`);
+        console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
         if (subdirectory) {
             if (subdirectory.startsWith("/")) {
@@ -37,15 +38,15 @@ function run() {
             deserializedOptions = {};
         }
 
-        const supposedGemfilePath = "./Gemfile";
+        const supposedGemfilePath = `${process.cwd()}/Gemfile`;
         let fastlaneCommand;
         if (fs.existsSync(supposedGemfilePath)) {
-            if (!shell.which('bundle')) {
-                shell.exec("gem install bundler");
-            }
+            installBundleDependencies(supposedGemfilePath);
 
             fastlaneCommand = "bundle exec fastlane";
         } else {
+            installFastlaneIfNecessary();
+
             fastlaneCommand = "fastlane"
         }
 
@@ -68,6 +69,42 @@ function run() {
         }
     } catch (error) {
         setFailed(error);
+    }
+}
+
+function installBundleDependencies(pathToGemFile) {
+    installBundlerIfNeeded();
+
+    const initialDirectory = process.cwd();
+    const pathToGemFileFolder = pathToGemFile.split("/").slice(0, -1).join("/");
+    shell.cd(pathToGemFileFolder);
+    shell.exec("bundle install");
+    shell.cd(initialDirectory);
+}
+
+function installFastlaneIfNecessary() {
+    if (!shell.which("fastlane")) {
+        installUsingRubyGems("fastlane");
+    }
+}
+
+function installBundlerIfNeeded() {
+    if (!shell.which('bundle')) {
+        installUsingRubyGems("bundler");
+    }
+}
+
+function installUsingRubyGems(packageName) {
+    setupRubyGemsIfNecessary();
+
+    shell.exec(`gem install ${packageName}`);
+}
+
+function setupRubyGemsIfNecessary() {
+    if (!shell.which("gem")) {
+        const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
+        const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
+        core.addPath(rubyBinaryDirectory);
     }
 }
 

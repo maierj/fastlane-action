@@ -21,7 +21,7 @@ This action executes the lane that is passed.
 Basic usage for executing a lane in the root directory without arguments.
 
 ```
-uses: maierj/fastlane-action@v0.9.5
+uses: maierj/fastlane-action@v0.10.0
 with:
   lane: 'beta'
 ```
@@ -33,7 +33,7 @@ fastlane beta option1:value1 option2:value2
 ```
 the workflow step should look like
 ```
-uses: maierj/fastlane-action@v0.9.5
+uses: maierj/fastlane-action@v0.10.0
 with:
   lane: 'beta'
   options: '{ "option1": "value1", "option2": "value2" }'
@@ -42,8 +42,12 @@ with:
 Usage for executing a lane in a context where the fastlane folder is in a subdirectory called `ios`.
 
 ```
-uses: maierj/fastlane-action@v0.9.5
+uses: maierj/fastlane-action@v0.10.0
 with:
   lane: 'beta'
   subdirectory: 'ios'
 ```
+
+## Support & Limitations
+
+The action support macOS and ubuntu as virtual environments.
