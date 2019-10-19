@@ -37,6 +37,18 @@ function run() {
             deserializedOptions = {};
         }
 
+        const supposedGemfilePath = "./Gemfile";
+        let fastlaneCommand;
+        if (fs.existsSync(supposedGemfilePath)) {
+            if (!shell.which('bundle')) {
+                shell.exec("gem install bundler");
+            }
+
+            fastlaneCommand = "bundle exec fastlane";
+        } else {
+            fastlaneCommand = "fastlane"
+        }
+
         let fastlaneOptions = [];
         for (let optionKey in deserializedOptions) {
             if (Object.prototype.hasOwnProperty.call(deserializedOptions, optionKey)) {
@@ -46,9 +58,9 @@ function run() {
 
         let fastlaneExecutionResult;
         if (fastlaneOptions.length === 0) {
-            fastlaneExecutionResult = shell.exec(`fastlane ${lane}`);
+            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${lane}`);
         } else {
-            fastlaneExecutionResult = shell.exec(`fastlane ${lane} ${fastlaneOptions.join(" ")}`);
+            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${lane} ${fastlaneOptions.join(" ")}`);
         }
 
         if (fastlaneExecutionResult.code !== 0) {
