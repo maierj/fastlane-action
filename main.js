@@ -69,28 +69,19 @@ function run() {
     }
 }
 
-function isUbuntu() {
-    return process.env.RUNNER_OS === "Linux"
-}
-
-function isMacOS() {
-    return process.env.RUNNER_OS === "macOS"
-}
-
-function installRubyGemsIfNeeded() {
-    if (!shell.which('gem')) {
-        if (isUbuntu()) {
-            shell.exec("sudo apt-get install -y rubygems");
-        } else {
-            // TODO Install on macOS
-        }
+function installUsingRubyGems(packageName) {
+    let gemPath = shell.which("gem");
+    if (!gemPath) {
+        const rubyPath = shell.which("ruby");
+        gemPath = rubyPath.split("/").slice(0, -1).join("/") + "/gem";
     }
+
+    shell.exec(`${gemPath} install ${packageName}`);
 }
 
 function installBundlerIfNeeded() {
     if (!shell.which('bundle')) {
-        installRubyGemsIfNeeded();
-        shell.exec("gem install bundler");
+        installUsingRubyGems("bundler");
     }
 }
 
