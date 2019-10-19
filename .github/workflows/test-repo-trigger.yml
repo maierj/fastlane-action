@@ -9,5 +9,6 @@ jobs:
         uses: actions/github-script@0.2.0
         with:
           github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
+          debug: true
           script: |
             github.request('POST /repos/:owner/:repo/dispatches', { owner: 'maierj', repo: 'fastlane-action-test', mediaType: { previews: ['everest'] }, request: { event_type: 'workflow_trigger' } })
