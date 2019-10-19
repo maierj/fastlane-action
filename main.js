@@ -41,12 +41,10 @@ function run() {
         let fastlaneCommand;
         if (fs.existsSync(supposedGemfilePath)) {
             if (!shell.which('bundle')) {
-                // TODO Install bundler
-                setFailed(new Error(`Bundler is not installed or not added to PATH.`));
-                return;
-            } else {
-                fastlaneCommand = "bundle exec fastlane";
+                shell.exec("gem install bundler");
             }
+
+            fastlaneCommand = "bundle exec fastlane";
         } else {
             fastlaneCommand = "fastlane"
         }
