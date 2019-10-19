@@ -40,7 +40,13 @@ function run() {
         const supposedGemfilePath = "./Gemfile";
         let fastlaneCommand;
         if (fs.existsSync(supposedGemfilePath)) {
-            fastlaneCommand = "bundle exec fastlane";
+            if (!shell.which('bundle')) {
+                // TODO Install bundler
+                setFailed(new Error(`Bundler is not installed or not added to PATH.`));
+                return;
+            } else {
+                fastlaneCommand = "bundle exec fastlane";
+            }
         } else {
             fastlaneCommand = "fastlane"
         }
