@@ -1,5 +1,7 @@
 # GitHub Action: Fastlane
 
+[![Actions Status](https://github.com/maierj/fastlane-action-test/workflows/Fastlane%20action%20test/badge.svg)](https://github.com/maierj/fastlane-action-test/actions)
+
 This action executes the lane that is passed.
 
 ## Inputs
