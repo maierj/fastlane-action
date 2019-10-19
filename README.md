@@ -47,3 +47,7 @@ with:
   lane: 'beta'
   subdirectory: 'ios'
 ```
+
+## Support & Limitations
+
+The action support macOS and ubuntu as virtual environments.
