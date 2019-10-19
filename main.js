@@ -76,7 +76,7 @@ function installBundleDependencies(pathToGemFile) {
     const initialDirectory = process.cwd();
     const pathToGemFileFolder = pathToGemFile.split("/").slice(0, -1).join("/");
     shell.cd(pathToGemFileFolder);
-    shell.exec("gem install");
+    shell.exec("bundle install");
     shell.cd(initialDirectory);
 }
 
