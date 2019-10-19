@@ -45,6 +45,8 @@ function run() {
 
             fastlaneCommand = "bundle exec fastlane";
         } else {
+            installFastlaneIfNecessary();
+
             fastlaneCommand = "fastlane"
         }
 
@@ -78,6 +80,12 @@ function installBundleDependencies(pathToGemFile) {
     shell.cd(pathToGemFileFolder);
     shell.exec("bundle install");
     shell.cd(initialDirectory);
+}
+
+function installFastlaneIfNecessary() {
+    if (!shell.which("fastlane")) {
+        installUsingRubyGems("fastlane");
+    }
 }
 
 function installBundlerIfNeeded() {
