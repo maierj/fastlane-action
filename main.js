@@ -71,13 +71,13 @@ function run() {
 }
 
 function installUsingRubyGems(packageName) {
-    let gemPath = shell.which("gem");
-    if (!gemPath) {
+    if (!shell.which("gem")) {
         const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
-        gemPath = rubyInstallationDirectory + "/bin/gem";
+        const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
+        core.addPath(rubyBinaryDirectory);
     }
 
-    shell.exec(`${gemPath} install ${packageName}`);
+    shell.exec(`gem install ${packageName}`);
 }
 
 function installBundlerIfNeeded() {
