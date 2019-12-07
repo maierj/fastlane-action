@@ -14,28 +14,7 @@ function run() {
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
         if (skipTracking !== "true") {
-            const firebase = require('firebase');
-            const analytics = require('firebase/analytics');
-
-            const firebaseConfig = {
-                apiKey: "AIzaSyBveH5zWhEjJ2kpux4T0Yo-hsRj-QfGnV8",
-                authDomain: "github-fastlane-action.firebaseapp.com",
-                databaseURL: "https://github-fastlane-action.firebaseio.com",
-                projectId: "github-fastlane-action",
-                storageBucket: "github-fastlane-action.appspot.com",
-                messagingSenderId: "627446812605",
-                appId: "1:627446812605:web:7038121e129b944aecccd4",
-                measurementId: "G-B7Y13DGE37"
-            };
-
-            firebase.initializeApp(firebaseConfig);
-            analytics.logEvent('action-run', {
-                runnerOS: process.env["RUNNER_OS"],
-                repository: process.env["GITHUB_REPOSITORY"],
-                usesOptions: !!optionsInput,
-                usesSubdirectory: !!subdirectory,
-                usesBundleInstallPath: !!bundleInstallPath
-            });
+            shell.exec(`curl -X POST -H \"Content-Type:application/json\" https://us-central1-github-fastlane-action.cloudfunctions.net/registerActionRun -d '{\"repository\":\"${process.env["GITHUB_REPOSITORY"]}\", \"runnerOS\":\"${process.env["RUNNER_OS"]}\", \"usesOptions\":\"${!!optionsInput}\", \"usesSubdirectory\":\"${!!subdirectory}\", \"usesBundleInstallPath\":\"${!!bundleInstallPath}\"}'`);
         }
 
         if (subdirectory) {
