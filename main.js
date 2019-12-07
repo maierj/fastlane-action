@@ -15,6 +15,7 @@ function run() {
 
         if (skipTracking !== "true") {
             const firebase = require('firebase');
+            const analytics = require('firebase/analytics');
 
             const firebaseConfig = {
                 apiKey: "AIzaSyBveH5zWhEjJ2kpux4T0Yo-hsRj-QfGnV8",
@@ -27,8 +28,8 @@ function run() {
                 measurementId: "G-B7Y13DGE37"
             };
 
-            const app = firebase.initializeApp(firebaseConfig);
-            app.logEvent('action-run', {
+            firebase.initializeApp(firebaseConfig);
+            analytics.logEvent('action-run', {
                 runnerOS: process.env["RUNNER_OS"],
                 repository: process.env["GITHUB_REPOSITORY"],
                 usesOptions: !!optionsInput,
