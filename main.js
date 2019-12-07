@@ -27,9 +27,8 @@ function run() {
                 measurementId: "G-B7Y13DGE37"
             };
 
-            firebase.initializeApp(firebaseConfig);
-            const analytics = firebase.analytics();
-            analytics.logEvent('action-run', {
+            const app = firebase.initializeApp(firebaseConfig);
+            app.logEvent('action-run', {
                 runnerOS: process.env["RUNNER_OS"],
                 repository: process.env["GITHUB_REPOSITORY"],
                 usesOptions: !!optionsInput,
