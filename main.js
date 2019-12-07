@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const tc = require('@actions/tool-cache');
 const shell = require('shelljs');
 const fs = require('fs');
 
@@ -7,8 +8,9 @@ function run() {
         const lane = core.getInput('lane', { required: true });
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
+        const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
 
-        console.log(`Executing lane ${lane}.`);
+        console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
         if (subdirectory) {
             if (subdirectory.startsWith("/")) {
@@ -37,6 +39,18 @@ function run() {
             deserializedOptions = {};
         }
 
+        const supposedGemfilePath = `${process.cwd()}/Gemfile`;
+        let fastlaneCommand;
+        if (fs.existsSync(supposedGemfilePath)) {
+            installBundleDependencies(supposedGemfilePath, bundleInstallPath);
+
+            fastlaneCommand = "bundle exec fastlane";
+        } else {
+            installFastlaneIfNecessary();
+
+            fastlaneCommand = "fastlane"
+        }
+
         let fastlaneOptions = [];
         for (let optionKey in deserializedOptions) {
             if (Object.prototype.hasOwnProperty.call(deserializedOptions, optionKey)) {
@@ -46,9 +60,9 @@ function run() {
 
         let fastlaneExecutionResult;
         if (fastlaneOptions.length === 0) {
-            fastlaneExecutionResult = shell.exec(`fastlane ${lane}`);
+            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${lane}`);
         } else {
-            fastlaneExecutionResult = shell.exec(`fastlane ${lane} ${fastlaneOptions.join(" ")}`);
+            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${lane} ${fastlaneOptions.join(" ")}`);
         }
 
         if (fastlaneExecutionResult.code !== 0) {
@@ -56,6 +70,49 @@ function run() {
         }
     } catch (error) {
         setFailed(error);
+    }
+}
+
+function installBundleDependencies(pathToGemFile, customInstallPath) {
+    installBundlerIfNeeded();
+    configureBundler(customInstallPath);
+
+    const initialDirectory = process.cwd();
+    const pathToGemFileFolder = pathToGemFile.split("/").slice(0, -1).join("/");
+    shell.cd(pathToGemFileFolder);
+    shell.exec("bundle install --jobs 2");
+    shell.cd(initialDirectory);
+}
+
+function installFastlaneIfNecessary() {
+    if (!shell.which("fastlane")) {
+        installUsingRubyGems("fastlane");
+    }
+}
+
+function installBundlerIfNeeded() {
+    if (!shell.which('bundle')) {
+        installUsingRubyGems("bundler");
+    }
+}
+
+function installUsingRubyGems(packageName) {
+    setupRubyGemsIfNecessary();
+
+    shell.exec(`gem install ${packageName}`);
+}
+
+function setupRubyGemsIfNecessary() {
+    if (!shell.which("gem")) {
+        const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
+        const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
+        core.addPath(rubyBinaryDirectory);
+    }
+}
+
+function configureBundler(customInstallPath) {
+    if (customInstallPath) {
+        shell.exec(`bundle config path ${customInstallPath}`);
     }
 }
 

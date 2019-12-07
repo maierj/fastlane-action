@@ -1,0 +1,14 @@
+name: 'Trigger test repository workflow'
+on: [push]
+
+jobs:
+  test_repo_trigger_job:
+    runs-on: ubuntu-18.04
+    name: Trigger the main workflow of the test repository.
+    steps:
+      - name: Create dispatch event
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
+          script: |
+            await github.request('POST /repos/:owner/:repo/dispatches', { owner: 'maierj', repo: 'fastlane-action-test', mediaType: { previews: ['everest'] }, event_type: 'workflow_trigger' })
