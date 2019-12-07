@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
 const shell = require('shelljs');
 const fs = require('fs');
+const firebase = require('firebase');
 
 function run() {
     try {
@@ -9,6 +10,31 @@ function run() {
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
+        const skipTracking = core.getInput('skip-tracking', { required: false });
+
+        if (!skipTracking) {
+            const firebaseConfig = {
+                apiKey: "AIzaSyBveH5zWhEjJ2kpux4T0Yo-hsRj-QfGnV8",
+                authDomain: "github-fastlane-action.firebaseapp.com",
+                databaseURL: "https://github-fastlane-action.firebaseio.com",
+                projectId: "github-fastlane-action",
+                storageBucket: "github-fastlane-action.appspot.com",
+                messagingSenderId: "627446812605",
+                appId: "1:627446812605:web:7038121e129b944aecccd4",
+                measurementId: "G-B7Y13DGE37"
+            };
+
+            const app = firebase.initializeApp(firebaseConfig);
+            const analytics = app.analytics();
+            analytics.logEvent('action-run', {
+                runnerOS: process.env["RUNNER_OS"],
+                repository: process.env["GITHUB_REPOSITORY"],
+                usesOptions: !!optionsInput,
+                usesSubdirectory: !!subdirectory,
+                usesBundleInstallPath: !!bundleInstallPath
+            });
+
+        }
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
