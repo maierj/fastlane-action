@@ -14,8 +14,6 @@ function run() {
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
         if (skipTracking !== "true") {
-            shell.exec("npm rebuild");
-
             const firebase = require('firebase');
 
             const firebaseConfig = {
