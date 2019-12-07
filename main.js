@@ -12,7 +12,7 @@ function run() {
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
         const skipTracking = core.getInput('skip-tracking', { required: false });
 
-        if (!skipTracking) {
+        if (skipTracking !== "true") {
             const firebaseConfig = {
                 apiKey: "AIzaSyBveH5zWhEjJ2kpux4T0Yo-hsRj-QfGnV8",
                 authDomain: "github-fastlane-action.firebaseapp.com",
@@ -33,7 +33,6 @@ function run() {
                 usesSubdirectory: !!subdirectory,
                 usesBundleInstallPath: !!bundleInstallPath
             });
-
         }
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
