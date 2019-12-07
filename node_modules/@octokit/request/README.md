@@ -23,6 +23,7 @@ the passed options and sends the request using [fetch](https://developer.mozilla
   - [REST API example](#rest-api-example)
   - [GraphQL example](#graphql-example)
   - [Alternative: pass `method` & `url` as part of options](#alternative-pass-method--url-as-part-of-options)
+- [Authentication](#authentication)
 - [request()](#request)
 - [`request.defaults()`](#requestdefaults)
 - [`request.endpoint`](#requestendpoint)
