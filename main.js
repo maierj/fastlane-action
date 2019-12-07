@@ -2,7 +2,6 @@ const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
 const shell = require('shelljs');
 const fs = require('fs');
-const firebase = require('firebase');
 
 function run() {
     try {
@@ -13,6 +12,10 @@ function run() {
         const skipTracking = core.getInput('skip-tracking', { required: false });
 
         if (skipTracking !== "true") {
+            shell.exec("npm rebuild");
+
+            const firebase = require('firebase');
+
             const firebaseConfig = {
                 apiKey: "AIzaSyBveH5zWhEjJ2kpux4T0Yo-hsRj-QfGnV8",
                 authDomain: "github-fastlane-action.firebaseapp.com",
