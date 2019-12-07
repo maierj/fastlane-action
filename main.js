@@ -8,6 +8,7 @@ function run() {
         const lane = core.getInput('lane', { required: true });
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
+        const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
@@ -41,7 +42,7 @@ function run() {
         const supposedGemfilePath = `${process.cwd()}/Gemfile`;
         let fastlaneCommand;
         if (fs.existsSync(supposedGemfilePath)) {
-            installBundleDependencies(supposedGemfilePath);
+            installBundleDependencies(supposedGemfilePath, bundleInstallPath);
 
             fastlaneCommand = "bundle exec fastlane";
         } else {
@@ -72,8 +73,9 @@ function run() {
     }
 }
 
-function installBundleDependencies(pathToGemFile) {
+function installBundleDependencies(pathToGemFile, customInstallPath) {
     installBundlerIfNeeded();
+    configureBundler(customInstallPath);
 
     const initialDirectory = process.cwd();
     const pathToGemFileFolder = pathToGemFile.split("/").slice(0, -1).join("/");
@@ -105,6 +107,12 @@ function setupRubyGemsIfNecessary() {
         const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
         const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
         core.addPath(rubyBinaryDirectory);
+    }
+}
+
+function configureBundler(customInstallPath) {
+    if (customInstallPath) {
+        shell.exec(`bundle config path ${customInstallPath}`);
     }
 }
 
