@@ -11,9 +11,9 @@ function run() {
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
         const skipTracking = core.getInput('skip-tracking', { required: false });
 
-        if (skipTracking !== "true") {
-            shell.exec("npm rebuild");
+        console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
+        if (skipTracking !== "true") {
             const firebase = require('firebase');
 
             const firebaseConfig = {
@@ -27,8 +27,8 @@ function run() {
                 measurementId: "G-B7Y13DGE37"
             };
 
-            const app = firebase.initializeApp(firebaseConfig);
-            const analytics = app.analytics();
+            firebase.initializeApp(firebaseConfig);
+            const analytics = firebase.analytics();
             analytics.logEvent('action-run', {
                 runnerOS: process.env["RUNNER_OS"],
                 repository: process.env["GITHUB_REPOSITORY"],
@@ -37,8 +37,6 @@ function run() {
                 usesBundleInstallPath: !!bundleInstallPath
             });
         }
-
-        console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
         if (subdirectory) {
             if (subdirectory.startsWith("/")) {
