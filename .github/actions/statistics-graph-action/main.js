@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const {Firestore} = require('@google-cloud/firestore');
 
 function run() {
     try {
