@@ -3,7 +3,7 @@ const {Firestore} = require('@google-cloud/firestore');
 
 function run() {
     try {
-        console.log("test");
+
     } catch (error) {
         setFailed(error);
     }
