@@ -26,7 +26,6 @@ function listMessages(client) {
     console.log("List messages");
     google.gmail("v1").users.messages.list({
         auth: client,
-        userId: "me",
         labelIds: ["SENT"]
     }).then(function(result) {
         console.log(result);
