@@ -24,7 +24,8 @@ function authorize(serviceAccountCredentials, callback) {
 
 function listMessages(client) {
     console.log("List messages");
-    client.gmail.users.messages.list({
+    google.gmail("v1").users.messages.list({
+        auth: client,
         userId: "me",
         labelIds: ["SENT"]
     }).then(function(result) {
