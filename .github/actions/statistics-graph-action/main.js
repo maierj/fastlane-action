@@ -26,8 +26,7 @@ function listMessages(client) {
     console.log("List messages");
     google.gmail("v1").users.messages.list({
         auth: client,
-        userId: "github.fastlane.action@gmail.com",
-        labelIds: ["SENT"]
+        userId: "github.fastlane.action@gmail.com"
     }).then(function(result) {
         console.log(result);
     }).catch(function(error) {
