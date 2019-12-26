@@ -1,0 +1,16 @@
+{
+  "name": "de.maierjonas.statistics-graph-action",
+  "version": "1.0.0",
+  "description": "A utility action for generating a graph image based on the usage statistics data from the fastlane action.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "maierj",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.1.3",
+    "@actions/github": "^1.1.0",
+    "googleapis": "^39.2.0"
+  }
+}

@@ -1,0 +1,345 @@
+/**
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { GaxiosPromise } from 'gaxios';
+import { Compute, JWT, OAuth2Client, UserRefreshClient } from 'google-auth-library';
+import { APIRequestContext, BodyResponseCallback, GlobalOptions, GoogleConfigurable, MethodOptions } from 'googleapis-common';
+export declare namespace iap_v1 {
+    interface Options extends GlobalOptions {
+        version: 'v1';
+    }
+    interface StandardParameters {
+        /**
+         * V1 error format.
+         */
+        '$.xgafv'?: string;
+        /**
+         * OAuth access token.
+         */
+        access_token?: string;
+        /**
+         * Data format for response.
+         */
+        alt?: string;
+        /**
+         * JSONP
+         */
+        callback?: string;
+        /**
+         * Selector specifying which fields to include in a partial response.
+         */
+        fields?: string;
+        /**
+         * API key. Your API key identifies your project and provides you with API
+         * access, quota, and reports. Required unless you provide an OAuth 2.0
+         * token.
+         */
+        key?: string;
+        /**
+         * OAuth 2.0 token for the current user.
+         */
+        oauth_token?: string;
+        /**
+         * Returns response with indentations and line breaks.
+         */
+        prettyPrint?: boolean;
+        /**
+         * Available to use for quota purposes for server-side applications. Can be
+         * any arbitrary string assigned to a user, but should not exceed 40
+         * characters.
+         */
+        quotaUser?: string;
+        /**
+         * Legacy upload protocol for media (e.g. "media", "multipart").
+         */
+        uploadType?: string;
+        /**
+         * Upload protocol for media (e.g. "raw", "multipart").
+         */
+        upload_protocol?: string;
+    }
+    /**
+     * Cloud Identity-Aware Proxy API
+     *
+     * Controls access to cloud applications running on Google Cloud Platform.
+     *
+     * @example
+     * const {google} = require('googleapis');
+     * const iap = google.iap('v1');
+     *
+     * @namespace iap
+     * @type {Function}
+     * @version v1
+     * @variation v1
+     * @param {object=} options Options for Iap
+     */
+    class Iap {
+        context: APIRequestContext;
+        v1: Resource$V1;
+        constructor(options: GlobalOptions, google?: GoogleConfigurable);
+    }
+    /**
+     * Associates `members` with a `role`.
+     */
+    interface Schema$Binding {
+        /**
+         * The condition that is associated with this binding. NOTE: an unsatisfied
+         * condition will not allow user access via current binding. Different
+         * bindings, including their conditions, are examined independently.
+         */
+        condition?: Schema$Expr;
+        /**
+         * Specifies the identities requesting access for a Cloud Platform resource.
+         * `members` can have the following values:  * `allUsers`: A special
+         * identifier that represents anyone who is    on the internet; with or
+         * without a Google account.  * `allAuthenticatedUsers`: A special
+         * identifier that represents anyone    who is authenticated with a Google
+         * account or a service account.  * `user:{emailid}`: An email address that
+         * represents a specific Google    account. For example, `alice@gmail.com` .
+         * * `serviceAccount:{emailid}`: An email address that represents a service
+         * account. For example, `my-other-app@appspot.gserviceaccount.com`.  *
+         * `group:{emailid}`: An email address that represents a Google group. For
+         * example, `admins@example.com`.   * `domain:{domain}`: The G Suite domain
+         * (primary) that represents all the    users of that domain. For example,
+         * `google.com` or `example.com`.
+         */
+        members?: string[];
+        /**
+         * Role that is assigned to `members`. For example, `roles/viewer`,
+         * `roles/editor`, or `roles/owner`.
+         */
+        role?: string;
+    }
+    /**
+     * Represents an expression text. Example:      title: &quot;User account
+     * presence&quot;     description: &quot;Determines whether the request has a
+     * user account&quot;     expression: &quot;size(request.user) &gt; 0&quot;
+     */
+    interface Schema$Expr {
+        /**
+         * An optional description of the expression. This is a longer text which
+         * describes the expression, e.g. when hovered over it in a UI.
+         */
+        description?: string;
+        /**
+         * Textual representation of an expression in Common Expression Language
+         * syntax.  The application context of the containing message determines
+         * which well-known feature set of CEL is supported.
+         */
+        expression?: string;
+        /**
+         * An optional string indicating the location of the expression for error
+         * reporting, e.g. a file name and a position in the file.
+         */
+        location?: string;
+        /**
+         * An optional title for the expression, i.e. a short string describing its
+         * purpose. This can be used e.g. in UIs which allow to enter the
+         * expression.
+         */
+        title?: string;
+    }
+    /**
+     * Request message for `GetIamPolicy` method.
+     */
+    interface Schema$GetIamPolicyRequest {
+    }
+    /**
+     * Defines an Identity and Access Management (IAM) policy. It is used to
+     * specify access control policies for Cloud Platform resources.   A `Policy`
+     * consists of a list of `bindings`. A `binding` binds a list of `members` to
+     * a `role`, where the members can be user accounts, Google groups, Google
+     * domains, and service accounts. A `role` is a named list of permissions
+     * defined by IAM.  **JSON Example**      {       &quot;bindings&quot;: [ {
+     * &quot;role&quot;: &quot;roles/owner&quot;,           &quot;members&quot;: [
+     * &quot;user:mike@example.com&quot;, &quot;group:admins@example.com&quot;,
+     * &quot;domain:google.com&quot;,
+     * &quot;serviceAccount:my-other-app@appspot.gserviceaccount.com&quot; ] }, {
+     * &quot;role&quot;: &quot;roles/viewer&quot;,           &quot;members&quot;:
+     * [&quot;user:sean@example.com&quot;]         }       ]     }  **YAML
+     * Example**      bindings:     - members:       - user:mike@example.com -
+     * group:admins@example.com       - domain:google.com       -
+     * serviceAccount:my-other-app@appspot.gserviceaccount.com       role:
+     * roles/owner     - members:       - user:sean@example.com       role:
+     * roles/viewer   For a description of IAM and its features, see the [IAM
+     * developer&#39;s guide](https://cloud.google.com/iam/docs).
+     */
+    interface Schema$Policy {
+        /**
+         * Associates a list of `members` to a `role`. `bindings` with no members
+         * will result in an error.
+         */
+        bindings?: Schema$Binding[];
+        /**
+         * `etag` is used for optimistic concurrency control as a way to help
+         * prevent simultaneous updates of a policy from overwriting each other. It
+         * is strongly suggested that systems make use of the `etag` in the
+         * read-modify-write cycle to perform policy updates in order to avoid race
+         * conditions: An `etag` is returned in the response to `getIamPolicy`, and
+         * systems are expected to put that etag in the request to `setIamPolicy` to
+         * ensure that their change will be applied to the same version of the
+         * policy.  If no `etag` is provided in the call to `setIamPolicy`, then the
+         * existing policy is overwritten blindly.
+         */
+        etag?: string;
+        /**
+         * Deprecated.
+         */
+        version?: number;
+    }
+    /**
+     * Request message for `SetIamPolicy` method.
+     */
+    interface Schema$SetIamPolicyRequest {
+        /**
+         * REQUIRED: The complete policy to be applied to the `resource`. The size
+         * of the policy is limited to a few 10s of KB. An empty policy is a valid
+         * policy but certain Cloud Platform services (such as Projects) might
+         * reject them.
+         */
+        policy?: Schema$Policy;
+    }
+    /**
+     * Request message for `TestIamPermissions` method.
+     */
+    interface Schema$TestIamPermissionsRequest {
+        /**
+         * The set of permissions to check for the `resource`. Permissions with
+         * wildcards (such as &#39;*&#39; or &#39;storage.*&#39;) are not allowed.
+         * For more information see [IAM
+         * Overview](https://cloud.google.com/iam/docs/overview#permissions).
+         */
+        permissions?: string[];
+    }
+    /**
+     * Response message for `TestIamPermissions` method.
+     */
+    interface Schema$TestIamPermissionsResponse {
+        /**
+         * A subset of `TestPermissionsRequest.permissions` that the caller is
+         * allowed.
+         */
+        permissions?: string[];
+    }
+    class Resource$V1 {
+        context: APIRequestContext;
+        constructor(context: APIRequestContext);
+        /**
+         * iap.getIamPolicy
+         * @desc Gets the access control policy for an Identity-Aware Proxy
+         * protected resource. More information about managing access via IAP can be
+         * found at:
+         * https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+         * @alias iap.getIamPolicy
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string} params.resource_ REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.
+         * @param {().GetIamPolicyRequest} params.resource Request body data
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        getIamPolicy(params?: Params$Resource$V1$Getiampolicy, options?: MethodOptions): GaxiosPromise<Schema$Policy>;
+        getIamPolicy(params: Params$Resource$V1$Getiampolicy, options: MethodOptions | BodyResponseCallback<Schema$Policy>, callback: BodyResponseCallback<Schema$Policy>): void;
+        getIamPolicy(params: Params$Resource$V1$Getiampolicy, callback: BodyResponseCallback<Schema$Policy>): void;
+        getIamPolicy(callback: BodyResponseCallback<Schema$Policy>): void;
+        /**
+         * iap.setIamPolicy
+         * @desc Sets the access control policy for an Identity-Aware Proxy
+         * protected resource. Replaces any existing policy. More information about
+         * managing access via IAP can be found at:
+         * https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+         * @alias iap.setIamPolicy
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string} params.resource_ REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.
+         * @param {().SetIamPolicyRequest} params.resource Request body data
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        setIamPolicy(params?: Params$Resource$V1$Setiampolicy, options?: MethodOptions): GaxiosPromise<Schema$Policy>;
+        setIamPolicy(params: Params$Resource$V1$Setiampolicy, options: MethodOptions | BodyResponseCallback<Schema$Policy>, callback: BodyResponseCallback<Schema$Policy>): void;
+        setIamPolicy(params: Params$Resource$V1$Setiampolicy, callback: BodyResponseCallback<Schema$Policy>): void;
+        setIamPolicy(callback: BodyResponseCallback<Schema$Policy>): void;
+        /**
+         * iap.testIamPermissions
+         * @desc Returns permissions that a caller has on the Identity-Aware Proxy
+         * protected resource. More information about managing access via IAP can be
+         * found at:
+         * https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+         * @alias iap.testIamPermissions
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string} params.resource_ REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.
+         * @param {().TestIamPermissionsRequest} params.resource Request body data
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        testIamPermissions(params?: Params$Resource$V1$Testiampermissions, options?: MethodOptions): GaxiosPromise<Schema$TestIamPermissionsResponse>;
+        testIamPermissions(params: Params$Resource$V1$Testiampermissions, options: MethodOptions | BodyResponseCallback<Schema$TestIamPermissionsResponse>, callback: BodyResponseCallback<Schema$TestIamPermissionsResponse>): void;
+        testIamPermissions(params: Params$Resource$V1$Testiampermissions, callback: BodyResponseCallback<Schema$TestIamPermissionsResponse>): void;
+        testIamPermissions(callback: BodyResponseCallback<Schema$TestIamPermissionsResponse>): void;
+    }
+    interface Params$Resource$V1$Getiampolicy extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * REQUIRED: The resource for which the policy is being requested. See the
+         * operation documentation for the appropriate value for this field.
+         */
+        resource?: string;
+        /**
+         * Request body metadata
+         */
+        requestBody?: Schema$GetIamPolicyRequest;
+    }
+    interface Params$Resource$V1$Setiampolicy extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * REQUIRED: The resource for which the policy is being specified. See the
+         * operation documentation for the appropriate value for this field.
+         */
+        resource?: string;
+        /**
+         * Request body metadata
+         */
+        requestBody?: Schema$SetIamPolicyRequest;
+    }
+    interface Params$Resource$V1$Testiampermissions extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * REQUIRED: The resource for which the policy detail is being requested.
+         * See the operation documentation for the appropriate value for this field.
+         */
+        resource?: string;
+        /**
+         * Request body metadata
+         */
+        requestBody?: Schema$TestIamPermissionsRequest;
+    }
+}

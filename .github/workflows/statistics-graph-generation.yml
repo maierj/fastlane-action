@@ -1,0 +1,18 @@
+name: 'Generate graph from usage statistics'
+on:
+  push:
+    branches:
+      - generate-usage-statistics-graph
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  graph-generation-job:
+    runs-on: ubuntu-18.04
+    name: Generate graph from usage statistics.
+    steps:
+      - name: Run graph generation utility action
+        uses: ./.github/actions/statistics-graph-action
+        with:
+          gmail-client-id: ${{ secrets.GMAIL_CLIENT_ID }}
+          gmail-client-secret: ${{ secrets.GMAIL_CLIENT_SECRET }}
