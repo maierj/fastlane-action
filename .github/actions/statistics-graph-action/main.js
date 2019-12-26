@@ -1,9 +1,7 @@
 const core = require('@actions/core');
-const fs = require('fs');
-const readline = require('readline');
 const {google} = require('googleapis');
 
-const SCOPES = ['https://mail.google.com/'];
+const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 const USER = "github.fastlane.action@gmail.com";
 
 function authorize(serviceAccountCredentials, callback) {
