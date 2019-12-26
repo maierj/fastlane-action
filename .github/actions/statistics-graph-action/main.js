@@ -24,6 +24,15 @@ function authorize(serviceAccountCredentials, callback) {
 
 function listMessages(client) {
     console.log("List messages");
+    client.gmail.users.messages.list({
+        userId: "me",
+        labelIds: ["SENT"]
+    }).then(function(result) {
+        console.log(result);
+    }).catch(function(error) {
+        console.log("Failed to list messages: " + error);
+    });
+
 }
 
 function run() {
