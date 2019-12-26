@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     name: Generate graph from usage statistics.
     steps:
+      - uses: actions/checkout@v1
       - name: Run graph generation utility action
         uses: ./.github/actions/statistics-graph-action
         with:
