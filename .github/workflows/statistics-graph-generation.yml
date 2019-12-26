@@ -15,4 +15,4 @@ jobs:
       - name: Run graph generation utility action
         uses: ./.github/actions/statistics-graph-action
         with:
-          service-account-credentials: ${{ secrets.GMAIL_SERVICE_ACCOUNT_CREDENTIALS }}
+          gmail-api-key: ${{ secrets.GMAIL_API_KEY }}

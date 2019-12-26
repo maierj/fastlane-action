@@ -2,11 +2,8 @@ name: Statistics Graph Action
 description: An action for creating a graph image that visualizes the usage statistics of the GitHub fastlane action
 author: "maierj"
 inputs:
-  gmail-client-id:
-    description: "The client id for accessing the gmail api."
-    required: true
-  gmail-client-secret:
-    description: "The client secret for accessing the gmail api."
+  gmail-api-key:
+    description: "The api key for accessing the gmail api."
     required: true
 runs:
   using: node12

@@ -1,32 +1,14 @@
 const core = require('@actions/core');
 const {google} = require('googleapis');
 
-const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 const USER = "github.fastlane.action@gmail.com";
-
-function authorize(serviceAccountCredentials, callback) {
-    const client = new google.auth.JWT(
-        serviceAccountCredentials.client_email,
-        null,
-        serviceAccountCredentials.private_key,
-        SCOPES,
-        USER
-    );
-
-    client.authorize()
-        .then(function(token) {
-            client.setCredentials(token);
-            callback(client)
-        }).catch(function(error) {
-            console.log("Failed to authorize: " + error);
-        });
-}
 
 function listMessages(client) {
     console.log("List messages");
     const gmail = google.gmail({
         version: "v1",
-        auth: client
+        auth: client,
+        labelIds: ["SENT"]
     });
 
     gmail.users.messages.list({
@@ -36,17 +18,16 @@ function listMessages(client) {
     }).catch(function(error) {
         console.log("Failed to list messages: " + error);
     });
-
 }
 
 function run() {
     try {
-        const serviceAccountCredentialData = core.getInput('service-account-credentials', { required: true });
-        const serviceAccountCredentials = JSON.parse(serviceAccountCredentialData);
+        const gmailApiKey = core.getInput('gmail-api-key', { required: true });
 
-        authorize(serviceAccountCredentials, function(client) {
-            listMessages(client);
-        });
+        const client = new google.auth.JWT();
+        client.fromAPIKey(gmailApiKey);
+
+        listMessages(client);
     } catch (error) {
         setFailed(error);
     }
