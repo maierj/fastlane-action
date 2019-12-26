@@ -3,11 +3,11 @@ const {google} = require('googleapis');
 
 const USER = "github.fastlane.action@gmail.com";
 
-function listMessages(client) {
+function listMessages(apiKey) {
     console.log("List messages");
     const gmail = google.gmail({
         version: "v1",
-        auth: client,
+        auth: apiKey,
         labelIds: ["SENT"]
     });
 
@@ -24,10 +24,7 @@ function run() {
     try {
         const gmailApiKey = core.getInput('gmail-api-key', { required: true });
 
-        const client = new google.auth.JWT();
-        client.fromAPIKey(gmailApiKey);
-
-        listMessages(client);
+        listMessages(gmailApiKey);
     } catch (error) {
         setFailed(error);
     }
