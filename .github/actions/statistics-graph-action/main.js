@@ -4,56 +4,35 @@ const readline = require('readline');
 const {google} = require('googleapis');
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
-const TOKEN_PATH = 'token.json';
 
-function authorize(clientId, clientSecret, callback) {
-    const oAuth2Client = new google.auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
+function authorize(serviceAccountCredentials, callback) {
+    const client = new google.auth.JWT(
+        serviceAccountCredentials.client_email,
+        null,
+        serviceAccountCredentials.private_key,
+        SCOPES
+    );
 
-    fs.readFile(TOKEN_PATH, (err, token) => {
-        if (err) return getNewToken(oAuth2Client, callback);
-        oAuth2Client.setCredentials(JSON.parse(token));
-        callback(oAuth2Client);
-    });
-}
-
-function getNewToken(oAuth2Client, callback) {
-    const authUrl = oAuth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: SCOPES,
-    });
-
-    console.log('Authorize this app by visiting this url:', authUrl);
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
-    rl.question('Enter the code from that page here: ', (code) => {
-        rl.close();
-        oAuth2Client.getToken(code, (err, token) => {
-            if (err) return console.error('Error retrieving access token', err);
-            oAuth2Client.setCredentials(token);
-            // Store the token to disk for later program executions
-            fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-                if (err) return console.error(err);
-                console.log('Token stored to', TOKEN_PATH);
-            });
-            callback(oAuth2Client);
+    client.authorize()
+        .then(function(token) {
+            client.setCredentials(token);
+            callback(client)
+        }).catch(function(error) {
+            console.log("Failed to authorize: " + error);
         });
-    });
 }
 
-function listMessages(auth) {
+function listMessages(client) {
     console.log("List messages");
 }
 
 function run() {
     try {
-        const gmailClientId = core.getInput('gmail-client-id', { required: true });
-        const gmailClientSecret = core.getInput('gmail-client-secret', { required: false });
+        const serviceAccountCredentialData = core.getInput('service-account-credentials', { required: true });
+        const serviceAccountCredentials = JSON.parse(serviceAccountCredentialData);
 
-        authorize(gmailClientId, gmailClientSecret, function(auth) {
-            listMessages(auth);
+        authorize(serviceAccountCredentials, function(client) {
+            listMessages(client);
         });
     } catch (error) {
         setFailed(error);
