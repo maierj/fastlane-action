@@ -4,6 +4,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+const USER = "github.fastlane.action@gmail.com";
 
 function authorize(serviceAccountCredentials, callback) {
     const client = new google.auth.JWT(
@@ -11,7 +12,7 @@ function authorize(serviceAccountCredentials, callback) {
         null,
         serviceAccountCredentials.private_key,
         SCOPES,
-        "github.fastlane.action@gmail.com"
+        USER
     );
 
     client.authorize()
@@ -31,7 +32,7 @@ function listMessages(client) {
     });
 
     gmail.users.messages.list({
-        userId: "github.fastlane.action@gmail.com"
+        userId: USER
     }).then(function(result) {
         console.log(result);
     }).catch(function(error) {
