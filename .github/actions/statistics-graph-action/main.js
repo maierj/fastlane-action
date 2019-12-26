@@ -10,7 +10,8 @@ function authorize(serviceAccountCredentials, callback) {
         serviceAccountCredentials.client_email,
         null,
         serviceAccountCredentials.private_key,
-        SCOPES
+        SCOPES,
+        "github.fastlane.action@gmail.com"
     );
 
     client.authorize()
@@ -24,8 +25,12 @@ function authorize(serviceAccountCredentials, callback) {
 
 function listMessages(client) {
     console.log("List messages");
-    google.gmail("v1").users.messages.list({
-        auth: client,
+    const gmail = google.gmail({
+        version: "v1",
+        auth: client
+    });
+
+    gmail.users.messages.list({
         userId: "github.fastlane.action@gmail.com"
     }).then(function(result) {
         console.log(result);
