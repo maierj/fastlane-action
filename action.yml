@@ -8,6 +8,9 @@ inputs:
   lane:
     description: "The lane that should be executed."
     required: true
+  options:
+    description: "The options that should be passed as arguments to the lane. The options should be serialized as a JSON object."
+    quired: false
   subdirectory:
     description: "The relative path from the project root directory to the subdirectory where the fastlane folder is located."
     required: false
