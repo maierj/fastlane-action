@@ -56,7 +56,7 @@ function generateChartImage(actionRuns) {
         if (runIndex === actionRuns.length - 1 || processedMonths.length > 0 && !processedMonths.includes(monthName)) {
             values.push({
                 x: monthName,
-                y: uniqueRepositories.length,
+                y: uniqueRepositories.size,
                 c: 0
             });
         }
@@ -68,8 +68,6 @@ function generateChartImage(actionRuns) {
     const vega = require('vega');
     const fs = require('fs');
     let spec = require(__dirname + '/vega-specs/unique-repositories');
-
-    console.log(values);
 
     spec.data[0].values = values;
 
