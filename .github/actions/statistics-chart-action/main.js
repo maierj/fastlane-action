@@ -55,9 +55,8 @@ function generateChartImage(actionRuns) {
 
         if (runIndex === actionRuns.length - 1 || processedMonths.length > 0 && !processedMonths.includes(monthName)) {
             values.push({
-                x: monthName,
-                y: uniqueRepositories.size,
-                c: 0
+                month: monthName,
+                count: uniqueRepositories.size
             });
         }
 

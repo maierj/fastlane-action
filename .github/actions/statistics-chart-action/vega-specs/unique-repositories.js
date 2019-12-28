@@ -1,29 +1,8 @@
 module.exports = {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "width": 500,
+  "width": 400,
   "height": 200,
   "padding": 5,
-
-  "signals": [
-    {
-      "name": "interpolate",
-      "value": "linear",
-      "bind": {
-        "input": "select",
-        "options": [
-          "basis",
-          "cardinal",
-          "catmull-rom",
-          "linear",
-          "monotone",
-          "natural",
-          "step",
-          "step-after",
-          "step-before"
-        ]
-      }
-    }
-  ],
 
   "data": [
     {
@@ -32,65 +11,76 @@ module.exports = {
     }
   ],
 
+  "signals": [
+    {
+      "name": "tooltip",
+      "value": {},
+      "on": [
+        {"events": "rect:mouseover", "update": "datum"},
+        {"events": "rect:mouseout",  "update": "{}"}
+      ]
+    }
+  ],
+
   "scales": [
     {
-      "name": "x",
-      "type": "point",
+      "name": "xscale",
+      "type": "band",
+      "domain": {"data": "table", "field": "month"},
       "range": "width",
-      "domain": {"data": "table", "field": "x"}
+      "padding": 0.05,
+      "round": true
     },
     {
-      "name": "y",
-      "type": "linear",
-      "range": "height",
+      "name": "yscale",
+      "domain": {"data": "table", "field": "count"},
       "nice": true,
-      "zero": true,
-      "domain": {"data": "table", "field": "y"}
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "range": "category",
-      "domain": {"data": "table", "field": "c"}
+      "range": "height"
     }
   ],
 
   "axes": [
-    {"orient": "bottom", "scale": "x"},
-    {"orient": "left", "scale": "y"}
+    { "orient": "bottom", "scale": "xscale" },
+    { "orient": "left", "scale": "yscale" }
   ],
 
   "marks": [
     {
-      "type": "group",
-      "from": {
-        "facet": {
-          "name": "series",
-          "data": "table",
-          "groupby": "c"
+      "type": "rect",
+      "from": {"data":"table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "month"},
+          "width": {"scale": "xscale", "band": 1},
+          "y": {"scale": "yscale", "field": "count"},
+          "y2": {"scale": "yscale", "value": 0}
+        },
+        "update": {
+          "fill": {"value": "steelblue"}
+        },
+        "hover": {
+          "fill": {"value": "red"}
         }
-      },
-      "marks": [
-        {
-          "type": "line",
-          "from": {"data": "series"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "x"},
-              "y": {"scale": "y", "field": "y"},
-              "stroke": {"scale": "color", "field": "c"},
-              "strokeWidth": {"value": 2}
-            },
-            "update": {
-              "interpolate": {"signal": "interpolate"},
-              "fillOpacity": {"value": 1}
-            },
-            "hover": {
-              "fillOpacity": {"value": 0.5}
-            }
-          }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "align": {"value": "center"},
+          "baseline": {"value": "bottom"},
+          "fill": {"value": "#333"}
+        },
+        "update": {
+          "x": {"scale": "xscale", "signal": "tooltip.month", "band": 0.5},
+          "y": {"scale": "yscale", "signal": "tooltip.count", "offset": -2},
+          "text": {"signal": "tooltip.count"},
+          "fillOpacity": [
+            {"test": "datum === tooltip", "value": 0},
+            {"value": 1}
+          ]
         }
-      ]
+      }
     }
   ]
-}
+};
