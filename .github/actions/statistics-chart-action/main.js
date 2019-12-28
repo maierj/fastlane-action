@@ -3,11 +3,11 @@ const {Firestore} = require('@google-cloud/firestore');
 
 function run() {
     try {
-        const firebaseServiceAccountEmail = core.getInput("firebase-service-account-email", { required: true });
-        const firebaseServiceAccountPrivateKey = core.getInput("firebase-service-account-private-key", { required: true });
+        const firebaseServiceAccountEmail = core.getInput('firebase-service-account-email', { required: true });
+        const firebaseServiceAccountPrivateKey = core.getInput('firebase-service-account-private-key', { required: true });
 
         const firestore = new Firestore({
-            projectId: "github-fastlane-action",
+            projectId: 'github-fastlane-action',
             credentials: {
                 client_email: firebaseServiceAccountEmail,
                 private_key: firebaseServiceAccountPrivateKey
@@ -15,7 +15,7 @@ function run() {
         });
 
         firestore
-            .collection("action-runs")
+            .collection('action-runs')
             .listDocuments()
             .then(function(documents) {
                 // TODO Read data
