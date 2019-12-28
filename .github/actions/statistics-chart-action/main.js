@@ -52,9 +52,8 @@ function generateChartImage(actionRuns) {
     for (let runIndex = 0; runIndex < actionRuns.length; runIndex++) {
         const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
-        console.log(monthName);
 
-        if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
+        if (runIndex === actionRuns.length - 1 || processedMonths.length > 0 && !processedMonths.includes(monthName)) {
             values.push({
                 x: monthName,
                 y: uniqueRepositories.length,
