@@ -33,7 +33,7 @@ function run() {
                 let actionRuns = [];
                 querySnapshot.forEach(docSnapshot => {
                     const data = docSnapshot.data();
-                    actionRuns.push(new ActionRun(data.created, data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath));
+                    actionRuns.push(new ActionRun(data.created.toDate(), data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath));
                 });
 
                 generateChartImage(actionRuns);
@@ -49,8 +49,8 @@ function generateChartImage(actionRuns) {
 
     let values = [];
 
-    for (let actionRun in actionRuns) {
-        console.log(JSON.stringify(actionRun));
+    for (let runIndex = 0; runIndex < actionRuns.length; runIndex++) {
+        const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
 
         if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
