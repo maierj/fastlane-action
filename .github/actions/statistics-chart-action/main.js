@@ -13,6 +13,13 @@ function run() {
                 private_key: firebaseServiceAccountPrivateKey
             }
         });
+
+        firestore
+            .collection("action-runs")
+            .listDocuments()
+            .then(function(documents) {
+                // TODO Read data
+            })
     } catch (error) {
         setFailed(error);
     }
