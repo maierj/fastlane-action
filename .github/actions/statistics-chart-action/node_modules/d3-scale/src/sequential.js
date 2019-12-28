@@ -1,9 +1,10 @@
-import {identity} from "./continuous";
-import {initInterpolator} from "./init";
-import {linearish} from "./linear";
-import {loggish} from "./log";
-import {symlogish} from "./symlog";
-import {powish} from "./pow";
+import {interpolate, interpolateRound} from "d3-interpolate";
+import {identity} from "./continuous.js";
+import {initInterpolator} from "./init.js";
+import {linearish} from "./linear.js";
+import {loggish} from "./log.js";
+import {symlogish} from "./symlog.js";
+import {powish} from "./pow.js";
 
 function transformer() {
   var x0 = 0,
@@ -21,7 +22,7 @@ function transformer() {
   }
 
   scale.domain = function(_) {
-    return arguments.length ? (t0 = transform(x0 = +_[0]), t1 = transform(x1 = +_[1]), k10 = t0 === t1 ? 0 : 1 / (t1 - t0), scale) : [x0, x1];
+    return arguments.length ? ([x0, x1] = _, t0 = transform(x0 = +x0), t1 = transform(x1 = +x1), k10 = t0 === t1 ? 0 : 1 / (t1 - t0), scale) : [x0, x1];
   };
 
   scale.clamp = function(_) {
@@ -31,6 +32,17 @@ function transformer() {
   scale.interpolator = function(_) {
     return arguments.length ? (interpolator = _, scale) : interpolator;
   };
+
+  function range(interpolate) {
+    return function(_) {
+      var r0, r1;
+      return arguments.length ? ([r0, r1] = _, interpolator = interpolate(r0, r1), scale) : [interpolator(0), interpolator(1)];
+    };
+  }
+
+  scale.range = range(interpolate);
+
+  scale.rangeRound = range(interpolateRound);
 
   scale.unknown = function(_) {
     return arguments.length ? (unknown = _, scale) : unknown;

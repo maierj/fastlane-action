@@ -1,8 +1,7 @@
 import {bisect} from "d3-array";
 import {interpolate as interpolateValue, interpolateNumber, interpolateRound} from "d3-interpolate";
-import {map, slice} from "./array";
-import constant from "./constant";
-import number from "./number";
+import constant from "./constant.js";
+import number from "./number.js";
 
 var unit = [0, 1];
 
@@ -16,8 +15,8 @@ function normalize(a, b) {
       : constant(isNaN(b) ? NaN : 0.5);
 }
 
-function clamper(domain) {
-  var a = domain[0], b = domain[domain.length - 1], t;
+function clamper(a, b) {
+  var t;
   if (a > b) t = a, a = b, b = t;
   return function(x) { return Math.max(a, Math.min(b, x)); };
 }
@@ -76,7 +75,9 @@ export function transformer() {
       input;
 
   function rescale() {
-    piecewise = Math.min(domain.length, range.length) > 2 ? polymap : bimap;
+    var n = Math.min(domain.length, range.length);
+    if (clamp !== identity) clamp = clamper(domain[0], domain[n - 1]);
+    piecewise = n > 2 ? polymap : bimap;
     output = input = null;
     return scale;
   }
@@ -90,19 +91,19 @@ export function transformer() {
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain = map.call(_, number), clamp === identity || (clamp = clamper(domain)), rescale()) : domain.slice();
+    return arguments.length ? (domain = Array.from(_, number), rescale()) : domain.slice();
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
+    return arguments.length ? (range = Array.from(_), rescale()) : range.slice();
   };
 
   scale.rangeRound = function(_) {
-    return range = slice.call(_), interpolate = interpolateRound, rescale();
+    return range = Array.from(_), interpolate = interpolateRound, rescale();
   };
 
   scale.clamp = function(_) {
-    return arguments.length ? (clamp = _ ? clamper(domain) : identity, scale) : clamp !== identity;
+    return arguments.length ? (clamp = _ ? true : identity, rescale()) : clamp !== identity;
   };
 
   scale.interpolate = function(_) {
@@ -119,6 +120,6 @@ export function transformer() {
   };
 }
 
-export default function continuous(transform, untransform) {
-  return transformer()(transform, untransform);
+export default function continuous() {
+  return transformer()(identity, identity);
 }

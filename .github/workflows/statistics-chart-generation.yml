@@ -19,5 +19,5 @@ jobs:
           firebase-service-account-private-key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY }}
       - uses: actions/upload-artifact@v1
         with:
-          name: chart-image
-          path: chart.png
+          name: charts
+          path: chart-output/

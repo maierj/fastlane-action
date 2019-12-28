@@ -1,11 +1,9 @@
-import {map} from "d3-collection";
-import {slice} from "./array";
-import {initRange} from "./init";
+import {initRange} from "./init.js";
 
-export var implicit = {name: "implicit"};
+export const implicit = Symbol("implicit");
 
 export default function ordinal() {
-  var index = map(),
+  var index = new Map(),
       domain = [],
       range = [],
       unknown = implicit;
@@ -21,14 +19,17 @@ export default function ordinal() {
 
   scale.domain = function(_) {
     if (!arguments.length) return domain.slice();
-    domain = [], index = map();
-    var i = -1, n = _.length, d, key;
-    while (++i < n) if (!index.has(key = (d = _[i]) + "")) index.set(key, domain.push(d));
+    domain = [], index = new Map();
+    for (const value of _) {
+      const key = value + "";
+      if (index.has(key)) continue;
+      index.set(key, domain.push(value));
+    }
     return scale;
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), scale) : range.slice();
+    return arguments.length ? (range = Array.from(_), scale) : range.slice();
   };
 
   scale.unknown = function(_) {

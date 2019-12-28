@@ -27,6 +27,7 @@ function run() {
 
         firestore
             .collection('action-runs')
+            .orderBy("created", "asc")
             .listDocuments()
             .then(documentRefs => {
                 return firestore.getAll(...documentRefs);
@@ -34,7 +35,7 @@ function run() {
             .then(documentSnapshots => {
                 generateChartImage(documentSnapshots.map(docSnapshot => {
                     const data = docSnapshot.data();
-                    return new ActionRun(data.created, data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath);
+                    return new ActionRun(data.created.toDate(), data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath);
                 }));
             });
     } catch (error) {
@@ -43,18 +44,42 @@ function run() {
 }
 
 function generateChartImage(actionRuns) {
-    for (let actionRun in actionRuns) {
+    let processedMonths = new Set();
+    let uniqueRepositories = new Set();
 
+    let values = [];
+
+    for (let actionRun in actionRuns) {
+        let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
+
+        if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
+            values.push({
+                x: monthName,
+                y: uniqueRepositories.length,
+                c: 0
+            });
+        }
+
+        processedMonths.add(monthName);
+        uniqueRepositories.add(actionRun.repository);
     }
 
-    const D3Node = require('d3-node');
-    const canvasModule = require('canvas');
+    const vega = require('vega');
     const fs = require('fs');
-    const d3n = new D3Node({ canvasModule });
-    const canvas = d3n.createCanvas(960, 500);
-    const context = canvas.getContext('2d');
+    let spec = require('vega-specs/unique-repositories');
 
-    canvas.pngStream().pipe(fs.createWriteStream('chart.png'));
+    spec.data[0].values = values;
+
+    const view = new vega.View(vega.parse(spec), {renderer: 'none'});
+
+    view.toCanvas()
+        .then(function(canvas) {
+            canvas.createPNGStream().pipe(fs.createWriteStream('chart-output/unique-repositories.png'));
+        })
+        .catch(function(err) {
+            setFailed(err);
+        });
+
 }
 
 function setFailed(error) {

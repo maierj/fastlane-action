@@ -1,10 +1,9 @@
 import {bisector, tickStep} from "d3-array";
 import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
 import {timeFormat} from "d3-time-format";
-import {map} from "./array";
-import continuous, {copy, identity} from "./continuous";
-import {initRange} from "./init";
-import nice from "./nice";
+import continuous, {copy} from "./continuous.js";
+import {initRange} from "./init.js";
+import nice from "./nice.js";
 
 var durationSecond = 1000,
     durationMinute = durationSecond * 60,
@@ -23,7 +22,7 @@ function number(t) {
 }
 
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
-  var scale = continuous(identity, identity),
+  var scale = continuous(),
       invert = scale.invert,
       domain = scale.domain;
 
@@ -67,7 +66,7 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
         : formatYear)(date);
   }
 
-  function tickInterval(interval, start, stop, step) {
+  function tickInterval(interval, start, stop) {
     if (interval == null) interval = 10;
 
     // If a desired tick count is specified, pick a reasonable tick interval
@@ -75,7 +74,8 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
     // Otherwise, assume interval is already a time interval and use it.
     if (typeof interval === "number") {
       var target = Math.abs(stop - start) / interval,
-          i = bisector(function(i) { return i[2]; }).right(tickIntervals, target);
+          i = bisector(function(i) { return i[2]; }).right(tickIntervals, target),
+          step;
       if (i === tickIntervals.length) {
         step = tickStep(start / durationYear, stop / durationYear, interval);
         interval = year;
@@ -87,9 +87,10 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
         step = Math.max(tickStep(start, stop, interval), 1);
         interval = millisecond;
       }
+      return interval.every(step);
     }
 
-    return step == null ? interval : interval.every(step);
+    return interval;
   }
 
   scale.invert = function(y) {
@@ -97,17 +98,17 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.domain = function(_) {
-    return arguments.length ? domain(map.call(_, number)) : domain().map(date);
+    return arguments.length ? domain(Array.from(_, number)) : domain().map(date);
   };
 
-  scale.ticks = function(interval, step) {
+  scale.ticks = function(interval) {
     var d = domain(),
         t0 = d[0],
         t1 = d[d.length - 1],
         r = t1 < t0,
         t;
     if (r) t = t0, t0 = t1, t1 = t;
-    t = tickInterval(interval, t0, t1, step);
+    t = tickInterval(interval, t0, t1);
     t = t ? t.range(t0, t1 + 1) : []; // inclusive stop
     return r ? t.reverse() : t;
   };
@@ -116,9 +117,9 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
     return specifier == null ? tickFormat : format(specifier);
   };
 
-  scale.nice = function(interval, step) {
+  scale.nice = function(interval) {
     var d = domain();
-    return (interval = tickInterval(interval, d[0], d[d.length - 1], step))
+    return (interval = tickInterval(interval, d[0], d[d.length - 1]))
         ? domain(nice(d, interval))
         : scale;
   };
