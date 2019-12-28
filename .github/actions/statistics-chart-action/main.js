@@ -29,7 +29,7 @@ function run() {
             .collection('action-runs')
             .listDocuments()
             .then(documentRefs => {
-                return firestore.getAll(documentRefs);
+                return firestore.getAll(...documentRefs);
             })
             .then(documentSnapshots => {
                 generateChartImage(documentSnapshots.map(docSnapshot => {
