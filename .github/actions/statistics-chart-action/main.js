@@ -28,15 +28,15 @@ function run() {
         firestore
             .collection('action-runs')
             .orderBy("created", "asc")
-            .listDocuments()
-            .then(documentRefs => {
-                return firestore.getAll(...documentRefs);
-            })
-            .then(documentSnapshots => {
-                generateChartImage(documentSnapshots.map(docSnapshot => {
+            .get()
+            .then(querySnapshot => {
+                let actionRuns = [];
+                querySnapshot.forEach(documentSnapshot => {
                     const data = docSnapshot.data();
-                    return new ActionRun(data.created.toDate(), data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath);
-                }));
+                    actionRuns.push(new ActionRun(data.created.toDate(), data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath));
+                });
+
+                generateChartImage(actionRuns);
             });
     } catch (error) {
         setFailed(error);
