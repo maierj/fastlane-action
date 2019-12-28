@@ -31,7 +31,7 @@ function run() {
             .get()
             .then(querySnapshot => {
                 let actionRuns = [];
-                querySnapshot.forEach(documentSnapshot => {
+                querySnapshot.forEach(docSnapshot => {
                     const data = docSnapshot.data();
                     actionRuns.push(new ActionRun(data.created.toDate(), data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath));
                 });
