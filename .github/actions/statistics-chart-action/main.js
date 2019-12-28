@@ -18,14 +18,15 @@ function run() {
             .collection('action-runs')
             .listDocuments()
             .then(function(documents) {
+                console.log(typeof documents);
                 for (let document in documents) {
-                    document
-                        .get()
-                        .then(function(documentSnapshot) {
-                            console.log(documentSnapshot.id);
-                        })
+                    console.log(typeof document);
+                    console.log(document.id)
                 }
             })
+            .catch(function(error) {
+                setFailed(error);
+            });
     } catch (error) {
         setFailed(error);
     }
