@@ -18,7 +18,13 @@ function run() {
             .collection('action-runs')
             .listDocuments()
             .then(function(documents) {
-                // TODO Read data
+                for (let document in documents) {
+                    document
+                        .get()
+                        .then(function(documentSnapshot) {
+                            console.log(documentSnapshot.id);
+                        })
+                }
             })
     } catch (error) {
         setFailed(error);
