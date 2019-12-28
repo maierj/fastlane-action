@@ -1,7 +1,7 @@
 module.exports = {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "width": 400,
-  "height": 200,
+  "width": 1280,
+  "height": 720,
   "padding": 5,
 
   "data": [
