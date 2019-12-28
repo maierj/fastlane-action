@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const {Firestore, DocumentSnapshot} = require('@google-cloud/firestore');
+const {Firestore} = require('@google-cloud/firestore');
 
 class ActionRun {
     constructor(createdAt, repository, runnerOS, usesOptions, usesSubdirectory, usesBundleInstallPath) {
@@ -33,7 +33,7 @@ function run() {
                 let actionRuns = [];
                 querySnapshot.forEach(docSnapshot => {
                     const data = docSnapshot.data();
-                    actionRuns.push(new ActionRun(data.created.toDate(), data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath));
+                    actionRuns.push(new ActionRun(data.created, data.repository, data.runnerOS, data.usesOptions, data.usesSubdirectory, data.usesBundleInstallPath));
                 });
 
                 generateChartImage(actionRuns);
