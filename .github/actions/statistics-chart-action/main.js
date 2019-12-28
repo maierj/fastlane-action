@@ -69,6 +69,8 @@ function generateChartImage(actionRuns) {
     const fs = require('fs');
     let spec = require(__dirname + '/vega-specs/unique-repositories');
 
+    console.log(values);
+
     spec.data[0].values = values;
 
     const view = new vega.View(vega.parse(spec), {renderer: 'none'});
