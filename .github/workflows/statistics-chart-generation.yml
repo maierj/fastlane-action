@@ -17,3 +17,7 @@ jobs:
         with:
           firebase-service-account-email: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMAIL }}
           firebase-service-account-private-key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY }}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: chart-image
+          path: chart.png
