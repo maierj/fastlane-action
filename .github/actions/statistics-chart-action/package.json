@@ -1,7 +1,7 @@
 {
-  "name": "de.maierjonas.statistics-graph-action",
+  "name": "de.maierjonas.statistics-chart-action",
   "version": "1.0.0",
-  "description": "A utility action for generating a graph image based on the usage statistics data from the fastlane action.",
+  "description": "A utility action for generating a chart image based on the usage statistics data from the fastlane action.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

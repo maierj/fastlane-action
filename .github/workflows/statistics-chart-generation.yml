@@ -1,0 +1,19 @@
+name: 'Generate chart from usage statistics data'
+on:
+  push:
+    branches:
+      - generate-usage-statistics-graph
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  graph-generation-job:
+    runs-on: ubuntu-18.04
+    name: Generate chart from usage statistics data.
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run chart generation utility action
+        uses: ./.github/actions/statistics-chart-action
+        with:
+          firebase-service-account-email: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMAIL }}
+          firebase-service-account-private-key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY }}
