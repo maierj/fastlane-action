@@ -73,6 +73,8 @@ function generateChartImage(actionRuns) {
 
     const view = new vega.View(vega.parse(spec), {renderer: 'none'});
 
+    fs.mkdirSync("chart-output");
+
     view.toCanvas()
         .then(function(canvas) {
             canvas.createPNGStream().pipe(fs.createWriteStream('chart-output/unique-repositories.png'));
