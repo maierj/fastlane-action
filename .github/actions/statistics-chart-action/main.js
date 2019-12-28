@@ -50,6 +50,7 @@ function generateChartImage(actionRuns) {
     let values = [];
 
     for (let actionRun in actionRuns) {
+        console.log(JSON.stringify(actionRun));
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
 
         if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
