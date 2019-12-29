@@ -25,7 +25,7 @@ jobs:
       - run: git add usage-statistics-charts/
       - run: git config user.email "maierjonas@live.de"
       - run: git config user.name "maierj"
-      - run: git commit -m "Generate usage statistics charts"
+      - run: git diff --staged --quiet || git commit -m "Generate usage statistics charts"
       - run: ssh-agent bash -c 'ssh-add - <<< "${DEPLOY_KEY}"; git push'
         env:
           DEPLOY_KEY: ${{ secrets.USAGE_STATISTICS_CHARTS_DEPLOY_KEY }}
