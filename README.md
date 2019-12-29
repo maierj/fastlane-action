@@ -81,3 +81,8 @@ Usage of this action is tracked using Firebase. The information that is tracked 
 - Name of the repository, that uses the action (using environment variable `GITHUB_REPOSITORY`)
 
 Tracking can be disabled by using the input option `skip-tracking`.
+
+## Usage statistics results (auto-generated nightly)
+
+### Cumulative number of unique repositories that use the action
+![Cumulative number of unique repositories that use the action](/generate-usage-statistics-graph/usage-statistics-charts/unique-repositories.png)
