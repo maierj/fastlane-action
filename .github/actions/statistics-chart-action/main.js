@@ -53,7 +53,14 @@ function generateChartImage(actionRuns) {
         const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
 
-        if (runIndex === actionRuns.length - 1 || processedMonths.length > 0 && !processedMonths.includes(monthName)) {
+        if (runIndex === actionRuns.length - 1) {
+            uniqueRepositories.add(actionRun.repository);
+
+            values.push({
+                month: monthName,
+                count: uniqueRepositories.size
+            });
+        } else if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
             values.push({
                 month: monthName,
                 count: uniqueRepositories.size
