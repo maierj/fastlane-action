@@ -1,8 +1,5 @@
 name: 'Generate chart from usage statistics data'
 on:
-  push:
-    branches:
-      - generate-usage-statistics-graph
   schedule:
     - cron:  '0 0 * * *'
 
@@ -12,6 +9,8 @@ jobs:
     name: Generate chart from usage statistics data.
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: "master"
       - name: Run chart generation utility action
         uses: ./.github/actions/statistics-chart-action
         with:

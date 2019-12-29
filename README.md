@@ -87,7 +87,7 @@ Tracking can be disabled by using the input option `skip-tracking`.
 These charts are generated automatically every night using a GitHub action workflow. The earliest data points were created on 27.12.2019.
 
 ### Cumulative number of unique repositories that use the action
-![Cumulative number of unique repositories that use the action](/usage-statistics-charts/unique-repositories.png)
+![Cumulative number of unique repositories that use the action](/../master/usage-statistics-charts/unique-repositories.png)
 
 ### Non-cumulative number of action runs
-![Non-cumulative number of action runs](/usage-statistics-charts/total-runs.png)
+![Non-cumulative number of action runs](/../master/usage-statistics-charts/total-runs.png)
