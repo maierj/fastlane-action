@@ -85,4 +85,4 @@ Tracking can be disabled by using the input option `skip-tracking`.
 ## Usage statistics results (auto-generated nightly)
 
 ### Cumulative number of unique repositories that use the action
-![Cumulative number of unique repositories that use the action](/generate-usage-statistics-graph/usage-statistics-charts/unique-repositories.png)
+![Cumulative number of unique repositories that use the action](/usage-statistics-charts/unique-repositories.png)
