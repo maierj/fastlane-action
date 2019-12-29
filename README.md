@@ -84,7 +84,7 @@ Tracking can be disabled by using the input option `skip-tracking`.
 
 ## Usage statistics results
 
-These charts are generated automatically every night. The earliest data points were created on 27.12.2019.
+These charts are generated automatically every night using a GitHub action workflow. The earliest data points were created on 27.12.2019.
 
 ### Cumulative number of unique repositories that use the action
 ![Cumulative number of unique repositories that use the action](/usage-statistics-charts/unique-repositories.png)
