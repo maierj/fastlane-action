@@ -40,8 +40,8 @@ module.exports = {
   ],
 
   "axes": [
-    { "orient": "bottom", "scale": "xscale" },
-    { "orient": "left", "scale": "yscale" }
+    { "orient": "bottom", "scale": "xscale", "title": "Months" },
+    { "orient": "left", "scale": "yscale", "title": "Number of unique repositories" }
   ],
 
   "marks": [
