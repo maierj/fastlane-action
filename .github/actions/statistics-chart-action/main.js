@@ -47,13 +47,13 @@ function generateChartImage(actionRuns) {
     let processedMonths = new Set();
     let uniqueRepositories = new Set();
 
-    let totalRunCount = 0;
+    let runCountForMonth = 0;
 
     let uniqueRepositoriesValues = [];
     let totalRunsValues = [];
 
     for (let runIndex = 0; runIndex < actionRuns.length; runIndex++) {
-        totalRunCount += 1;
+        runCountForMonth += 1;
 
         const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
@@ -68,7 +68,7 @@ function generateChartImage(actionRuns) {
 
             totalRunsValues.push({
                 month: monthName,
-                count: totalRunCount
+                count: runCountForMonth
             });
         } else if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
             uniqueRepositoriesValues.push({
@@ -78,8 +78,10 @@ function generateChartImage(actionRuns) {
 
             totalRunsValues.push({
                 month: monthName,
-                count: totalRunCount
+                count: runCountForMonth
             });
+
+            runCountForMonth = 0;
         }
 
         processedMonths.add(monthName);
