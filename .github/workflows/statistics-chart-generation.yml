@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     name: Generate chart from usage statistics data.
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Run chart generation utility action
         uses: ./.github/actions/statistics-chart-action
         with:
@@ -21,3 +21,8 @@ jobs:
         with:
           name: charts
           path: chart-output/
+      - runs: git add chart-output/
+      - runs: git commit -m "Generate usage statistics charts"
+      - runs: ssh-agent bash -c 'ssh-add - <<< "${DEPLOY_KEY}"; git clone git@github.com:user/project.git'
+        env:
+          DEPLOY_KEY: ${{ secrets.USAGE_STATISTICS_CHARTS_DEPLOY_KEY }}
