@@ -1,5 +1,9 @@
 name: 'Trigger test repository workflow'
-on: [push]
+on:
+  push:
+    branches:
+      - master
+      - development
 
 jobs:
   test_repo_trigger_job:

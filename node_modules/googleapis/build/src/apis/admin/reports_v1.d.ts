@@ -1,0 +1,667 @@
+/**
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { GaxiosPromise } from 'gaxios';
+import { Compute, JWT, OAuth2Client, UserRefreshClient } from 'google-auth-library';
+import { APIRequestContext, BodyResponseCallback, GlobalOptions, GoogleConfigurable, MethodOptions } from 'googleapis-common';
+export declare namespace admin_reports_v1 {
+    interface Options extends GlobalOptions {
+        version: 'reports_v1';
+    }
+    interface StandardParameters {
+        /**
+         * Data format for the response.
+         */
+        alt?: string;
+        /**
+         * Selector specifying which fields to include in a partial response.
+         */
+        fields?: string;
+        /**
+         * API key. Your API key identifies your project and provides you with API
+         * access, quota, and reports. Required unless you provide an OAuth 2.0
+         * token.
+         */
+        key?: string;
+        /**
+         * OAuth 2.0 token for the current user.
+         */
+        oauth_token?: string;
+        /**
+         * Returns response with indentations and line breaks.
+         */
+        prettyPrint?: boolean;
+        /**
+         * An opaque string that represents a user for quota purposes. Must not
+         * exceed 40 characters.
+         */
+        quotaUser?: string;
+        /**
+         * Deprecated. Please use quotaUser instead.
+         */
+        userIp?: string;
+    }
+    /**
+     * Admin Reports API
+     *
+     * Fetches reports for the administrators of G Suite customers about the
+     * usage, collaboration, security, and risk for their users.
+     *
+     * @example
+     * const {google} = require('googleapis');
+     * const admin = google.admin('reports_v1');
+     *
+     * @namespace admin
+     * @type {Function}
+     * @version reports_v1
+     * @variation reports_v1
+     * @param {object=} options Options for Admin
+     */
+    class Admin {
+        context: APIRequestContext;
+        activities: Resource$Activities;
+        channels: Resource$Channels;
+        customerUsageReports: Resource$Customerusagereports;
+        entityUsageReports: Resource$Entityusagereports;
+        userUsageReport: Resource$Userusagereport;
+        constructor(options: GlobalOptions, google?: GoogleConfigurable);
+    }
+    /**
+     * JSON template for a collection of activites.
+     */
+    interface Schema$Activities {
+        /**
+         * ETag of the resource.
+         */
+        etag?: string;
+        /**
+         * Each record in read response.
+         */
+        items?: Schema$Activity[];
+        /**
+         * Kind of list response this is.
+         */
+        kind?: string;
+        /**
+         * Token for retrieving the next page
+         */
+        nextPageToken?: string;
+    }
+    /**
+     * JSON template for the activity resource.
+     */
+    interface Schema$Activity {
+        /**
+         * User doing the action.
+         */
+        actor?: {
+            callerType?: string;
+            email?: string;
+            key?: string;
+            profileId?: string;
+        };
+        /**
+         * ETag of the entry.
+         */
+        etag?: string;
+        /**
+         * Activity events.
+         */
+        events?: Array<{
+            name?: string;
+            parameters?: Array<{
+                boolValue?: boolean;
+                intValue?: string;
+                multiIntValue?: string[];
+                multiValue?: string[];
+                name?: string;
+                value?: string;
+            }>;
+            type?: string;
+        }>;
+        /**
+         * Unique identifier for each activity record.
+         */
+        id?: {
+            applicationName?: string;
+            customerId?: string;
+            time?: string;
+            uniqueQualifier?: string;
+        };
+        /**
+         * IP Address of the user doing the action.
+         */
+        ipAddress?: string;
+        /**
+         * Kind of resource this is.
+         */
+        kind?: string;
+        /**
+         * Domain of source customer.
+         */
+        ownerDomain?: string;
+    }
+    /**
+     * An notification channel used to watch for resource changes.
+     */
+    interface Schema$Channel {
+        /**
+         * The address where notifications are delivered for this channel.
+         */
+        address?: string;
+        /**
+         * Date and time of notification channel expiration, expressed as a Unix
+         * timestamp, in milliseconds. Optional.
+         */
+        expiration?: string;
+        /**
+         * A UUID or similar unique string that identifies this channel.
+         */
+        id?: string;
+        /**
+         * Identifies this as a notification channel used to watch for changes to a
+         * resource. Value: the fixed string &quot;api#channel&quot;.
+         */
+        kind?: string;
+        /**
+         * Additional parameters controlling delivery channel behavior. Optional.
+         */
+        params?: {
+            [key: string]: string;
+        };
+        /**
+         * A Boolean value to indicate whether payload is wanted. Optional.
+         */
+        payload?: boolean;
+        /**
+         * An opaque ID that identifies the resource being watched on this channel.
+         * Stable across different API versions.
+         */
+        resourceId?: string;
+        /**
+         * A version-specific identifier for the watched resource.
+         */
+        resourceUri?: string;
+        /**
+         * An arbitrary string delivered to the target address with each
+         * notification delivered over this channel. Optional.
+         */
+        token?: string;
+        /**
+         * The type of delivery mechanism used for this channel.
+         */
+        type?: string;
+    }
+    /**
+     * JSON template for a usage report.
+     */
+    interface Schema$UsageReport {
+        /**
+         * The date to which the record belongs.
+         */
+        date?: string;
+        /**
+         * Information about the type of the item.
+         */
+        entity?: {
+            customerId?: string;
+            entityId?: string;
+            profileId?: string;
+            type?: string;
+            userEmail?: string;
+        };
+        /**
+         * ETag of the resource.
+         */
+        etag?: string;
+        /**
+         * The kind of object.
+         */
+        kind?: string;
+        /**
+         * Parameter value pairs for various applications.
+         */
+        parameters?: Array<{
+            boolValue?: boolean;
+            datetimeValue?: string;
+            intValue?: string;
+            msgValue?: Array<{
+                [key: string]: any;
+            }>;
+            name?: string;
+            stringValue?: string;
+        }>;
+    }
+    /**
+     * JSON template for a collection of usage reports.
+     */
+    interface Schema$UsageReports {
+        /**
+         * ETag of the resource.
+         */
+        etag?: string;
+        /**
+         * The kind of object.
+         */
+        kind?: string;
+        /**
+         * Token for retrieving the next page
+         */
+        nextPageToken?: string;
+        /**
+         * Various application parameter records.
+         */
+        usageReports?: Schema$UsageReport[];
+        /**
+         * Warnings if any.
+         */
+        warnings?: Array<{
+            code?: string;
+            data?: Array<{
+                key?: string;
+                value?: string;
+            }>;
+            message?: string;
+        }>;
+    }
+    class Resource$Activities {
+        context: APIRequestContext;
+        constructor(context: APIRequestContext);
+        /**
+         * reports.activities.list
+         * @desc Retrieves a list of activities for a specific customer and
+         * application.
+         * @alias reports.activities.list
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string=} params.actorIpAddress IP Address of host where the event was performed. Supports both IPv4 and IPv6 addresses.
+         * @param {string} params.applicationName Application name for which the events are to be retrieved.
+         * @param {string=} params.customerId Represents the customer for which the data is to be fetched.
+         * @param {string=} params.endTime Return events which occurred at or before this time.
+         * @param {string=} params.eventName Name of the event being queried.
+         * @param {string=} params.filters Event parameters in the form [parameter1 name][operator][parameter1 value],[parameter2 name][operator][parameter2 value],...
+         * @param {integer=} params.maxResults Number of activity records to be shown in each page.
+         * @param {string=} params.orgUnitID the organizational unit's(OU) ID to filter activities from users belonging to a specific OU or one of its sub-OU(s)
+         * @param {string=} params.pageToken Token to specify next page.
+         * @param {string=} params.startTime Return events which occurred at or after this time.
+         * @param {string} params.userKey Represents the profile id or the user email for which the data should be filtered. When 'all' is specified as the userKey, it returns usageReports for all users.
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        list(params?: Params$Resource$Activities$List, options?: MethodOptions): GaxiosPromise<Schema$Activities>;
+        list(params: Params$Resource$Activities$List, options: MethodOptions | BodyResponseCallback<Schema$Activities>, callback: BodyResponseCallback<Schema$Activities>): void;
+        list(params: Params$Resource$Activities$List, callback: BodyResponseCallback<Schema$Activities>): void;
+        list(callback: BodyResponseCallback<Schema$Activities>): void;
+        /**
+         * reports.activities.watch
+         * @desc Push changes to activities
+         * @alias reports.activities.watch
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string=} params.actorIpAddress IP Address of host where the event was performed. Supports both IPv4 and IPv6 addresses.
+         * @param {string} params.applicationName Application name for which the events are to be retrieved.
+         * @param {string=} params.customerId Represents the customer for which the data is to be fetched.
+         * @param {string=} params.endTime Return events which occurred at or before this time.
+         * @param {string=} params.eventName Name of the event being queried.
+         * @param {string=} params.filters Event parameters in the form [parameter1 name][operator][parameter1 value],[parameter2 name][operator][parameter2 value],...
+         * @param {integer=} params.maxResults Number of activity records to be shown in each page.
+         * @param {string=} params.orgUnitID the organizational unit's(OU) ID to filter activities from users belonging to a specific OU or one of its sub-OU(s)
+         * @param {string=} params.pageToken Token to specify next page.
+         * @param {string=} params.startTime Return events which occurred at or after this time.
+         * @param {string} params.userKey Represents the profile id or the user email for which the data should be filtered. When 'all' is specified as the userKey, it returns usageReports for all users.
+         * @param {().Channel} params.resource Request body data
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        watch(params?: Params$Resource$Activities$Watch, options?: MethodOptions): GaxiosPromise<Schema$Channel>;
+        watch(params: Params$Resource$Activities$Watch, options: MethodOptions | BodyResponseCallback<Schema$Channel>, callback: BodyResponseCallback<Schema$Channel>): void;
+        watch(params: Params$Resource$Activities$Watch, callback: BodyResponseCallback<Schema$Channel>): void;
+        watch(callback: BodyResponseCallback<Schema$Channel>): void;
+    }
+    interface Params$Resource$Activities$List extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * IP Address of host where the event was performed. Supports both IPv4 and
+         * IPv6 addresses.
+         */
+        actorIpAddress?: string;
+        /**
+         * Application name for which the events are to be retrieved.
+         */
+        applicationName?: string;
+        /**
+         * Represents the customer for which the data is to be fetched.
+         */
+        customerId?: string;
+        /**
+         * Return events which occurred at or before this time.
+         */
+        endTime?: string;
+        /**
+         * Name of the event being queried.
+         */
+        eventName?: string;
+        /**
+         * Event parameters in the form [parameter1 name][operator][parameter1
+         * value],[parameter2 name][operator][parameter2 value],...
+         */
+        filters?: string;
+        /**
+         * Number of activity records to be shown in each page.
+         */
+        maxResults?: number;
+        /**
+         * the organizational unit's(OU) ID to filter activities from users
+         * belonging to a specific OU or one of its sub-OU(s)
+         */
+        orgUnitID?: string;
+        /**
+         * Token to specify next page.
+         */
+        pageToken?: string;
+        /**
+         * Return events which occurred at or after this time.
+         */
+        startTime?: string;
+        /**
+         * Represents the profile id or the user email for which the data should be
+         * filtered. When 'all' is specified as the userKey, it returns usageReports
+         * for all users.
+         */
+        userKey?: string;
+    }
+    interface Params$Resource$Activities$Watch extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * IP Address of host where the event was performed. Supports both IPv4 and
+         * IPv6 addresses.
+         */
+        actorIpAddress?: string;
+        /**
+         * Application name for which the events are to be retrieved.
+         */
+        applicationName?: string;
+        /**
+         * Represents the customer for which the data is to be fetched.
+         */
+        customerId?: string;
+        /**
+         * Return events which occurred at or before this time.
+         */
+        endTime?: string;
+        /**
+         * Name of the event being queried.
+         */
+        eventName?: string;
+        /**
+         * Event parameters in the form [parameter1 name][operator][parameter1
+         * value],[parameter2 name][operator][parameter2 value],...
+         */
+        filters?: string;
+        /**
+         * Number of activity records to be shown in each page.
+         */
+        maxResults?: number;
+        /**
+         * the organizational unit's(OU) ID to filter activities from users
+         * belonging to a specific OU or one of its sub-OU(s)
+         */
+        orgUnitID?: string;
+        /**
+         * Token to specify next page.
+         */
+        pageToken?: string;
+        /**
+         * Return events which occurred at or after this time.
+         */
+        startTime?: string;
+        /**
+         * Represents the profile id or the user email for which the data should be
+         * filtered. When 'all' is specified as the userKey, it returns usageReports
+         * for all users.
+         */
+        userKey?: string;
+        /**
+         * Request body metadata
+         */
+        requestBody?: Schema$Channel;
+    }
+    class Resource$Channels {
+        context: APIRequestContext;
+        constructor(context: APIRequestContext);
+        /**
+         * admin.channels.stop
+         * @desc Stop watching resources through this channel
+         * @alias admin.channels.stop
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {().Channel} params.resource Request body data
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        stop(params?: Params$Resource$Channels$Stop, options?: MethodOptions): GaxiosPromise<void>;
+        stop(params: Params$Resource$Channels$Stop, options: MethodOptions | BodyResponseCallback<void>, callback: BodyResponseCallback<void>): void;
+        stop(params: Params$Resource$Channels$Stop, callback: BodyResponseCallback<void>): void;
+        stop(callback: BodyResponseCallback<void>): void;
+    }
+    interface Params$Resource$Channels$Stop extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * Request body metadata
+         */
+        requestBody?: Schema$Channel;
+    }
+    class Resource$Customerusagereports {
+        context: APIRequestContext;
+        constructor(context: APIRequestContext);
+        /**
+         * reports.customerUsageReports.get
+         * @desc Retrieves a report which is a collection of properties / statistics
+         * for a specific customer.
+         * @alias reports.customerUsageReports.get
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string=} params.customerId Represents the customer for which the data is to be fetched.
+         * @param {string} params.date Represents the date in yyyy-mm-dd format for which the data is to be fetched.
+         * @param {string=} params.pageToken Token to specify next page.
+         * @param {string=} params.parameters Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        get(params?: Params$Resource$Customerusagereports$Get, options?: MethodOptions): GaxiosPromise<Schema$UsageReports>;
+        get(params: Params$Resource$Customerusagereports$Get, options: MethodOptions | BodyResponseCallback<Schema$UsageReports>, callback: BodyResponseCallback<Schema$UsageReports>): void;
+        get(params: Params$Resource$Customerusagereports$Get, callback: BodyResponseCallback<Schema$UsageReports>): void;
+        get(callback: BodyResponseCallback<Schema$UsageReports>): void;
+    }
+    interface Params$Resource$Customerusagereports$Get extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * Represents the customer for which the data is to be fetched.
+         */
+        customerId?: string;
+        /**
+         * Represents the date in yyyy-mm-dd format for which the data is to be
+         * fetched.
+         */
+        date?: string;
+        /**
+         * Token to specify next page.
+         */
+        pageToken?: string;
+        /**
+         * Represents the application name, parameter name pairs to fetch in csv as
+         * app_name1:param_name1, app_name2:param_name2.
+         */
+        parameters?: string;
+    }
+    class Resource$Entityusagereports {
+        context: APIRequestContext;
+        constructor(context: APIRequestContext);
+        /**
+         * reports.entityUsageReports.get
+         * @desc Retrieves a report which is a collection of properties / statistics
+         * for a set of objects.
+         * @alias reports.entityUsageReports.get
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string=} params.customerId Represents the customer for which the data is to be fetched.
+         * @param {string} params.date Represents the date in yyyy-mm-dd format for which the data is to be fetched.
+         * @param {string} params.entityKey Represents the key of object for which the data should be filtered.
+         * @param {string} params.entityType Type of object. Should be one of - gplus_communities.
+         * @param {string=} params.filters Represents the set of filters including parameter operator value.
+         * @param {integer=} params.maxResults Maximum number of results to return. Maximum allowed is 1000
+         * @param {string=} params.pageToken Token to specify next page.
+         * @param {string=} params.parameters Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        get(params?: Params$Resource$Entityusagereports$Get, options?: MethodOptions): GaxiosPromise<Schema$UsageReports>;
+        get(params: Params$Resource$Entityusagereports$Get, options: MethodOptions | BodyResponseCallback<Schema$UsageReports>, callback: BodyResponseCallback<Schema$UsageReports>): void;
+        get(params: Params$Resource$Entityusagereports$Get, callback: BodyResponseCallback<Schema$UsageReports>): void;
+        get(callback: BodyResponseCallback<Schema$UsageReports>): void;
+    }
+    interface Params$Resource$Entityusagereports$Get extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * Represents the customer for which the data is to be fetched.
+         */
+        customerId?: string;
+        /**
+         * Represents the date in yyyy-mm-dd format for which the data is to be
+         * fetched.
+         */
+        date?: string;
+        /**
+         * Represents the key of object for which the data should be filtered.
+         */
+        entityKey?: string;
+        /**
+         * Type of object. Should be one of - gplus_communities.
+         */
+        entityType?: string;
+        /**
+         * Represents the set of filters including parameter operator value.
+         */
+        filters?: string;
+        /**
+         * Maximum number of results to return. Maximum allowed is 1000
+         */
+        maxResults?: number;
+        /**
+         * Token to specify next page.
+         */
+        pageToken?: string;
+        /**
+         * Represents the application name, parameter name pairs to fetch in csv as
+         * app_name1:param_name1, app_name2:param_name2.
+         */
+        parameters?: string;
+    }
+    class Resource$Userusagereport {
+        context: APIRequestContext;
+        constructor(context: APIRequestContext);
+        /**
+         * reports.userUsageReport.get
+         * @desc Retrieves a report which is a collection of properties / statistics
+         * for a set of users.
+         * @alias reports.userUsageReport.get
+         * @memberOf! ()
+         *
+         * @param {object} params Parameters for request
+         * @param {string=} params.customerId Represents the customer for which the data is to be fetched.
+         * @param {string} params.date Represents the date in yyyy-mm-dd format for which the data is to be fetched.
+         * @param {string=} params.filters Represents the set of filters including parameter operator value.
+         * @param {integer=} params.maxResults Maximum number of results to return. Maximum allowed is 1000
+         * @param {string=} params.orgUnitID the organizational unit's ID to filter usage parameters from users belonging to a specific OU or one of its sub-OU(s).
+         * @param {string=} params.pageToken Token to specify next page.
+         * @param {string=} params.parameters Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.
+         * @param {string} params.userKey Represents the profile id or the user email for which the data should be filtered.
+         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param {callback} callback The callback that handles the response.
+         * @return {object} Request object
+         */
+        get(params?: Params$Resource$Userusagereport$Get, options?: MethodOptions): GaxiosPromise<Schema$UsageReports>;
+        get(params: Params$Resource$Userusagereport$Get, options: MethodOptions | BodyResponseCallback<Schema$UsageReports>, callback: BodyResponseCallback<Schema$UsageReports>): void;
+        get(params: Params$Resource$Userusagereport$Get, callback: BodyResponseCallback<Schema$UsageReports>): void;
+        get(callback: BodyResponseCallback<Schema$UsageReports>): void;
+    }
+    interface Params$Resource$Userusagereport$Get extends StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
+        /**
+         * Represents the customer for which the data is to be fetched.
+         */
+        customerId?: string;
+        /**
+         * Represents the date in yyyy-mm-dd format for which the data is to be
+         * fetched.
+         */
+        date?: string;
+        /**
+         * Represents the set of filters including parameter operator value.
+         */
+        filters?: string;
+        /**
+         * Maximum number of results to return. Maximum allowed is 1000
+         */
+        maxResults?: number;
+        /**
+         * the organizational unit's ID to filter usage parameters from users
+         * belonging to a specific OU or one of its sub-OU(s).
+         */
+        orgUnitID?: string;
+        /**
+         * Token to specify next page.
+         */
+        pageToken?: string;
+        /**
+         * Represents the application name, parameter name pairs to fetch in csv as
+         * app_name1:param_name1, app_name2:param_name2.
+         */
+        parameters?: string;
+        /**
+         * Represents the profile id or the user email for which the data should be
+         * filtered.
+         */
+        userKey?: string;
+    }
+}

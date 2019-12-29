@@ -1,0 +1,13 @@
+name: Statistics Chart Action
+description: An action for creating a chart image that visualizes the usage statistics data of the GitHub fastlane action
+author: "maierj"
+inputs:
+  firebase-service-account-email:
+    description: "The email of the service account for accessing the Firebase api."
+    required: true
+  firebase-service-account-private-key:
+    description: "The private key of the service account for accessing the Firebase api."
+    required: true
+runs:
+  using: node12
+  main: main.js
