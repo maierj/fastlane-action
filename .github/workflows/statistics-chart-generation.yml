@@ -22,6 +22,8 @@ jobs:
           name: charts
           path: chart-output/
       - run: git add chart-output/
+      - run: git config user.email "maierjonas@live.de"
+      - run: git config user.name "maierj"
       - run: git commit -m "Generate usage statistics charts"
       - run: ssh-agent bash -c 'ssh-add - <<< "${DEPLOY_KEY}"; git push'
         env:
