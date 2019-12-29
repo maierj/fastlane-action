@@ -82,7 +82,9 @@ Usage of this action is tracked using Firebase. The information that is tracked 
 
 Tracking can be disabled by using the input option `skip-tracking`.
 
-## Usage statistics results (auto-generated nightly)
+## Usage statistics results
+
+These charts are generated automatically every night. The earliest data points were created on 27.12.2019.
 
 ### Cumulative number of unique repositories that use the action
 ![Cumulative number of unique repositories that use the action](/usage-statistics-charts/unique-repositories.png)
