@@ -88,3 +88,6 @@ These charts are generated automatically every night using a GitHub action workf
 
 ### Cumulative number of unique repositories that use the action
 ![Cumulative number of unique repositories that use the action](/usage-statistics-charts/unique-repositories.png)
+
+### Non-cumulative number of action runs
+![Non-cumulative number of action runs](/usage-statistics-charts/total-runs.png)

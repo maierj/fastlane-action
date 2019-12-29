@@ -47,23 +47,38 @@ function generateChartImage(actionRuns) {
     let processedMonths = new Set();
     let uniqueRepositories = new Set();
 
-    let values = [];
+    let totalRunCount = 0;
+
+    let uniqueRepositoriesValues = [];
+    let totalRunsValues = [];
 
     for (let runIndex = 0; runIndex < actionRuns.length; runIndex++) {
+        totalRunCount += 1;
+
         const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
 
         if (runIndex === actionRuns.length - 1) {
             uniqueRepositories.add(actionRun.repository);
 
-            values.push({
+            uniqueRepositoriesValues.push({
                 month: monthName,
                 count: uniqueRepositories.size
             });
+
+            totalRunsValues.push({
+                month: monthName,
+                count: totalRunCount
+            });
         } else if (processedMonths.length > 0 && !processedMonths.includes(monthName)) {
-            values.push({
+            uniqueRepositoriesValues.push({
                 month: monthName,
                 count: uniqueRepositories.size
+            });
+
+            totalRunsValues.push({
+                month: monthName,
+                count: totalRunCount
             });
         }
 
@@ -73,15 +88,18 @@ function generateChartImage(actionRuns) {
 
     const vega = require('vega');
     const fs = require('fs');
-    let spec = require(__dirname + '/vega-specs/unique-repositories');
+    let uniqueRepositoriesSpec = require(__dirname + '/vega-specs/unique-repositories');
+    let totalRunsSpec = require(__dirname + '/vega-specs/total-runs');
 
-    spec.data[0].values = values;
+    uniqueRepositoriesSpec.data[0].values = uniqueRepositoriesValues;
+    totalRunsSpec.data[0].values = totalRunsValues;
 
-    const view = new vega.View(vega.parse(spec), {renderer: 'none'});
+    const uniqueRepositoriesChartView = new vega.View(vega.parse(uniqueRepositoriesSpec), {renderer: 'none'});
+    const totalRunsChartView = new vega.View(vega.parse(totalRunsSpec), {renderer: 'none'});
 
     fs.mkdirSync("chart-output");
 
-    view.toCanvas()
+    uniqueRepositoriesChartView.toCanvas()
         .then(function(canvas) {
             canvas.createPNGStream().pipe(fs.createWriteStream('chart-output/unique-repositories.png'));
         })
@@ -89,6 +107,13 @@ function generateChartImage(actionRuns) {
             setFailed(err);
         });
 
+    totalRunsChartView.toCanvas()
+        .then(function(canvas) {
+            canvas.createPNGStream().pipe(fs.createWriteStream('chart-output/total-runs.png'));
+        })
+        .catch(function(err) {
+            setFailed(err);
+        });
 }
 
 function setFailed(error) {
