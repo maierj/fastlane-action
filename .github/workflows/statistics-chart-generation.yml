@@ -23,6 +23,6 @@ jobs:
           path: chart-output/
       - runs: git add chart-output/
       - runs: git commit -m "Generate usage statistics charts"
-      - runs: ssh-agent bash -c 'ssh-add - <<< "${DEPLOY_KEY}"; git clone git@github.com:user/project.git'
+      - runs: ssh-agent bash -c 'ssh-add - <<< "${DEPLOY_KEY}"; git push'
         env:
           DEPLOY_KEY: ${{ secrets.USAGE_STATISTICS_CHARTS_DEPLOY_KEY }}
