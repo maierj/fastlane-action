@@ -9,8 +9,13 @@ function run() {
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
+        const skipTracking = core.getInput('skip-tracking', { required: false });
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
+
+        if (skipTracking !== "true") {
+            shell.exec(`curl -X POST -H \"Content-Type:application/json\" https://us-central1-github-fastlane-action.cloudfunctions.net/registerActionRun -d '{\"repository\":\"${process.env["GITHUB_REPOSITORY"]}\", \"runnerOS\":\"${process.env["RUNNER_OS"]}\", \"usesOptions\":\"${!!optionsInput}\", \"usesSubdirectory\":\"${!!subdirectory}\", \"usesBundleInstallPath\":\"${!!bundleInstallPath}\"}'`);
+        }
 
         if (subdirectory) {
             if (subdirectory.startsWith("/")) {
