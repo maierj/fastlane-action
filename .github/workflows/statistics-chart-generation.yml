@@ -1,5 +1,8 @@
 name: 'Generate chart from usage statistics data'
 on:
+  push:
+    branches:
+      - master
   schedule:
     - cron:  '0 0 * * *'
 
