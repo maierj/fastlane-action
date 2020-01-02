@@ -52,11 +52,15 @@ function generateChartImage(actionRuns) {
     let uniqueRepositoriesValues = [];
     let totalRunsValues = [];
 
+    console.log(`Iterating through all ${actionRuns.length} action runs.`);
     for (let runIndex = 0; runIndex < actionRuns.length; runIndex++) {
+        console.log(`Reading action run ${runIndex}.`);
         runCountForMonth += 1;
 
         const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
+
+        console.log(`Month name: ${monthName}.`);
 
         if (runIndex === actionRuns.length - 1) {
             uniqueRepositories.add(actionRun.repository);
@@ -86,6 +90,9 @@ function generateChartImage(actionRuns) {
 
         processedMonths.add(monthName);
         uniqueRepositories.add(actionRun.repository);
+
+        console.log(`Unique repositories data: ${JSON.stringify(uniqueRepositoriesValues)}.`);
+        console.log(`Total runs data: ${JSON.stringify(totalRunsValues)}.`);
     }
 
     const vega = require('vega');
