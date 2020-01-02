@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: "master"
+          ref: "generate-usage-statistics-graph"
       - name: Run chart generation utility action
         uses: ./.github/actions/statistics-chart-action
         with:
