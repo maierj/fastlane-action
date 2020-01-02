@@ -52,6 +52,8 @@ function generateChartImage(actionRuns) {
     let uniqueRepositoriesValues = [];
     let totalRunsValues = [];
 
+    let lastMonth = null;
+
     console.log(`Iterating through all ${actionRuns.length} action runs.`);
     for (let runIndex = 0; runIndex < actionRuns.length; runIndex++) {
         console.log(`Reading action run ${runIndex}.`);
@@ -59,6 +61,9 @@ function generateChartImage(actionRuns) {
 
         const actionRun = actionRuns[runIndex];
         let monthName = actionRun.createdAt.toLocaleDateString("en-US", { month: "numeric", year: "numeric" });
+        if (lastMonth === null) {
+            lastMonth = monthName;
+        }
 
         console.log(`Month name: ${monthName}.`);
 
@@ -66,22 +71,22 @@ function generateChartImage(actionRuns) {
             uniqueRepositories.add(actionRun.repository);
 
             uniqueRepositoriesValues.push({
-                month: monthName,
+                month: lastMonth,
                 count: uniqueRepositories.size
             });
 
             totalRunsValues.push({
-                month: monthName,
+                month: lastMonth,
                 count: runCountForMonth
             });
         } else if (processedMonths.size > 0 && !processedMonths.has(monthName)) {
             uniqueRepositoriesValues.push({
-                month: monthName,
+                month: lastMonth,
                 count: uniqueRepositories.size
             });
 
             totalRunsValues.push({
-                month: monthName,
+                month: lastMonth,
                 count: runCountForMonth
             });
 
@@ -93,6 +98,8 @@ function generateChartImage(actionRuns) {
 
         console.log(`Unique repositories data: ${JSON.stringify(uniqueRepositoriesValues)}.`);
         console.log(`Total runs data: ${JSON.stringify(totalRunsValues)}.`);
+
+        lastMonth = monthName;
     }
 
     const vega = require('vega');
