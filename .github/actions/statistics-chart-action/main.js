@@ -74,7 +74,7 @@ function generateChartImage(actionRuns) {
                 month: monthName,
                 count: runCountForMonth
             });
-        } else if (processedMonths.size > 0 && !processedMonths.includes(monthName)) {
+        } else if (processedMonths.size > 0 && !processedMonths.has(monthName)) {
             uniqueRepositoriesValues.push({
                 month: monthName,
                 count: uniqueRepositories.size
