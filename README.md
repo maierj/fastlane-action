@@ -5,7 +5,7 @@
 This action executes the lane that is passed.
 
 ### :information_source: **If you are using a version <= 1.2.0: Update to a newer version.**
-The ruby configuration that is part of this action is broken on some runners when using a version <= 1.2.0 (see [#3](/../../issues/3)).
+The ruby configuration that is part of this action is broken on some runners when using a version <= 1.2.0 (see [#38](/../../issues/38)).
 It's working reliably again starting from version 1.3.0.
 
 ## Inputs
