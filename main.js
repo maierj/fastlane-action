@@ -109,6 +109,11 @@ function installUsingRubyGems(packageName) {
 
 function setupRubyGemsIfNecessary() {
     if (!shell.which("gem")) {
+        console.log("Available Ruby versions:");
+        tc.findAllVersions('Ruby').forEach((version) => {
+            console.log(version);
+        });
+
         const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
         const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
 
