@@ -111,7 +111,14 @@ function setupRubyGemsIfNecessary() {
     if (!shell.which("gem")) {
         const rubyInstallationDirectory = tc.find('Ruby', '2.6.3');
         const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
+
+        console.log(`Adding Ruby path "${rubyBinaryDirectory}" to $PATH.`);
+
         core.addPath(rubyBinaryDirectory);
+
+        if (!shell.which("ruby")) {
+            console.error("Ruby configuration failed.");
+        }
     }
 }
 
