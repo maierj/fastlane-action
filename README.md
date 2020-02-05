@@ -4,9 +4,8 @@
 
 This action executes the lane that is passed.
 
-### :information_source: **If you are using a version <= 1.2.0: Update to a newer version.**
-The ruby configuration that is part of this action is broken on some runners when using a version <= 1.2.0 (see [#38](/../../issues/38)).
-It's working reliably again starting from version 1.3.0.
+### :information_source: **If you are using a version < 1.4.0: Update to a newer version.**
+There is a file permission issue for versions lower than 1.4.0. Please update to the newest version.
 
 ## Inputs
 
@@ -35,7 +34,7 @@ It's working reliably again starting from version 1.3.0.
 Basic usage for executing a lane in the root directory without arguments.
 
 ```
-uses: maierj/fastlane-action@v1.3.0
+uses: maierj/fastlane-action@v1.4.0
 with:
   lane: 'beta'
 ```
@@ -47,7 +46,7 @@ fastlane beta option1:value1 option2:value2
 ```
 the workflow step should look like
 ```
-uses: maierj/fastlane-action@v1.3.0
+uses: maierj/fastlane-action@v1.4.0
 with:
   lane: 'beta'
   options: '{ "option1": "value1", "option2": "value2" }'
@@ -56,7 +55,7 @@ with:
 Usage for executing a lane in a context where the fastlane folder is in a subdirectory called `ios`.
 
 ```
-uses: maierj/fastlane-action@v1.3.0
+uses: maierj/fastlane-action@v1.4.0
 with:
   lane: 'beta'
   subdirectory: 'ios'
@@ -65,7 +64,7 @@ with:
 Speed up execution time of your workflow by specifying a custom directory where Ruby gems are installed to and shared between multiple steps of the same workflow.
 
 ```
-uses maierj/fastlane-action@v1.3.0
+uses maierj/fastlane-action@v1.4.0
 with:
   lane: 'beta'
   subdirectory: 'ios'
