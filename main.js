@@ -85,7 +85,7 @@ function installBundleDependencies(pathToGemFile, customInstallPath) {
     const initialDirectory = process.cwd();
     const pathToGemFileFolder = pathToGemFile.split("/").slice(0, -1).join("/");
     shell.cd(pathToGemFileFolder);
-    shell.exec("bundle install --jobs 2");
+    shell.exec("sudo bundle install --jobs 2");
     shell.cd(initialDirectory);
 }
 
@@ -104,7 +104,7 @@ function installBundlerIfNeeded() {
 function installUsingRubyGems(packageName) {
     setupRubyGemsIfNecessary();
 
-    shell.exec(`gem install ${packageName}`);
+    shell.exec(`sudo gem install ${packageName}`);
 }
 
 function setupRubyGemsIfNecessary() {
@@ -118,7 +118,7 @@ function setupRubyGemsIfNecessary() {
 
 function configureBundler(customInstallPath) {
     if (customInstallPath) {
-        shell.exec(`bundle config path ${customInstallPath}`);
+        shell.exec(`sudo bundle config path ${customInstallPath}`);
     }
 }
 
