@@ -6,6 +6,7 @@ const fs = require('fs');
 function run() {
     try {
         const lane = core.getInput('lane', { required: true });
+        const envInput = core.getInput('env', { required: false });
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
@@ -63,11 +64,16 @@ function run() {
             }
         }
 
+        let laneAndEnv = lane;
+        if (envInput) {
+            console.log(`Adding --env ${envInput} to fastlane execution`);
+            laneAndEnv += `--env ${envInput}`;
+        }
         let fastlaneExecutionResult;
         if (fastlaneOptions.length === 0) {
-            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${lane}`);
+            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${laneAndEnv}`);
         } else {
-            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${lane} ${fastlaneOptions.join(" ")}`);
+            fastlaneExecutionResult = shell.exec(`${fastlaneCommand} ${laneAndEnv} ${fastlaneOptions.join(" ")}`);
         }
 
         if (fastlaneExecutionResult.code !== 0) {

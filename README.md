@@ -29,6 +29,10 @@ There is a file permission issue for versions lower than 1.4.0. Please update to
 
 **Optional** The action tracks usage using Firebase by default (see [Tracking of usage statistics](https://github.com/maierj/fastlane-action#tracking-of-usage-statistics)). You can disable tracking by setting this input option to 'true'.
 
+### `env`
+
+**Optional** The env context to run the lane with (see [Environment Variables](https://docs.fastlane.tools/advanced/other/#environment-variables))
+
 ## Example usage
 
 Basic usage for executing a lane in the root directory without arguments.
