@@ -10,6 +10,7 @@ function run() {
         const subdirectory = core.getInput('subdirectory', { required: false });
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
         const skipTracking = core.getInput('skip-tracking', { required: false });
+        const runClean = core.getInput('run-clean', { required: false});
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
 
@@ -50,6 +51,11 @@ function run() {
             installBundleDependencies(supposedGemfilePath, bundleInstallPath);
 
             fastlaneCommand = "bundle exec fastlane";
+            # Cleanup the cache if asked, this removes the plugins that have been deleted.
+            # Don't fail on this.
+            if (runClean) {
+                shell.exec(`bundle clean`);
+            }
         } else {
             installFastlaneIfNecessary();
 
