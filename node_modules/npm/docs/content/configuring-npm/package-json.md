@@ -197,7 +197,8 @@ npm also sets a top-level "maintainers" field with your npm user info.
 ### funding
 
 You can specify an object containing an URL that provides up-to-date
-information about ways to help fund development of your package:
+information about ways to help fund development of your package, or
+a string URL, or an array of these:
 
     "funding": {
       "type" : "individual",
@@ -209,10 +210,26 @@ information about ways to help fund development of your package:
       "url" : "https://www.patreon.com/my-account"
     }
 
+    "funding": "http://example.com/donate"
+
+    "funding": [
+      {
+        "type" : "individual",
+        "url" : "http://example.com/donate"
+      },
+      "http://example.com/donateAlso",
+      {
+        "type" : "patreon",
+        "url" : "https://www.patreon.com/my-account"
+      }
+    ]
+
+
 Users can use the `npm fund` subcommand to list the `funding` URLs of all
 dependencies of their project, direct and indirect. A shortcut to visit each
 funding url is also available when providing the project name such as:
-`npm fund <projectname>`.
+`npm fund <projectname>` (when there are multiple URLs, the first one will be
+visited)
 
 ### files
 
@@ -255,15 +272,13 @@ Conversely, some files are always ignored:
 * `.hg`
 * `.lock-wscript`
 * `.wafpickle-N`
-* `.*.swp`
 * `.DS_Store`
-* `._*`
 * `npm-debug.log`
 * `.npmrc`
 * `node_modules`
 * `config.gypi`
-* `*.orig`
 * `package-lock.json` (use shrinkwrap instead)
+* All files containing a `*` character (incompatible with Windows) 
 
 ### main
 
@@ -740,7 +755,8 @@ If a dependency can be used, but you would like npm to proceed if it cannot be
 found or fails to install, then you may put it in the `optionalDependencies`
 object.  This is a map of package name to version or url, just like the
 `dependencies` object.  The difference is that build failures do not cause
-installation to fail.
+installation to fail.  Running `npm install --no-optional` will prevent these
+dependencies from being installed.
 
 It is still your program's responsibility to handle the lack of the
 dependency.  For example, something like this:

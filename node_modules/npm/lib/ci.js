@@ -32,8 +32,12 @@ function ci (args, cb) {
     dirPacker: pack.packGitDep
   }
 
+  if (npm.config.get('dev')) {
+    log.warn('ci', 'Usage of the `--dev` option is deprecated. Use `--also=dev` instead.')
+  }
+
   for (const key in npm.config.list[0]) {
-    if (key !== 'log') {
+    if (!['log', 'cache'].includes(key)) {
       opts[key] = npm.config.list[0][key]
     }
   }
