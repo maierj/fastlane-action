@@ -4,8 +4,10 @@
 
 This action executes the lane that is passed.
 
-### :information_source: **If you are using a version < 1.4.0: Update to a newer version.**
-There is a file permission issue for versions lower than 1.4.0. Please update to the newest version.
+### :information_source **Migration to 2.0.0.**
+Since there occurred various issues with the hardcoded ruby version inside this action, I decided to extract the setup of ruby into the responsibility of the user of this action.
+So, if you were previously used this action without a setup-ruby step preceeding this action, you have to add the setup-ruby step as soon as you migrate to version 2.0.0 of this action.
+If you don't want the behaviour to change, you can specify ruby version >= 2.6, since that was the version that was hardcoded in versions < 2.0.0 of this action.
 
 ## Inputs
 
@@ -34,9 +36,13 @@ There is a file permission issue for versions lower than 1.4.0. Please update to
 Basic usage for executing a lane in the root directory without arguments.
 
 ```
-uses: maierj/fastlane-action@v1.4.0
-with:
-  lane: 'beta'
+- uses: actions/checkout@v2
+- uses: actions/setup-ruby@v1
+  with:
+    ruby-version: '>= 2.6'
+- uses: maierj/fastlane-action@v2.0.0
+  with:
+    lane: 'beta'
 ```
 \
 Usage for executing a lane in the root directory with arguments.
@@ -46,29 +52,41 @@ fastlane beta option1:value1 option2:value2
 ```
 the workflow step should look like
 ```
-uses: maierj/fastlane-action@v1.4.0
-with:
-  lane: 'beta'
-  options: '{ "option1": "value1", "option2": "value2" }'
+- uses: actions/checkout@v2
+- uses: actions/setup-ruby@v1
+  with:
+    ruby-version: '>= 2.6'
+- uses: maierj/fastlane-action@v2.0.0
+  with:
+    lane: 'beta'
+    options: '{ "option1": "value1", "option2": "value2" }'
 ```
 \
 Usage for executing a lane in a context where the fastlane folder is in a subdirectory called `ios`.
 
 ```
-uses: maierj/fastlane-action@v1.4.0
-with:
-  lane: 'beta'
-  subdirectory: 'ios'
+- uses: actions/checkout@v2
+- uses: actions/setup-ruby@v1
+  with:
+    ruby-version: '>= 2.6'
+- uses: maierj/fastlane-action@v2.0.0
+  with:
+    lane: 'beta'
+    subdirectory: 'ios'
 ```
 \
 Speed up execution time of your workflow by specifying a custom directory where Ruby gems are installed to and shared between multiple steps of the same workflow.
 
 ```
-uses maierj/fastlane-action@v1.4.0
-with:
-  lane: 'beta'
-  subdirectory: 'ios'
-  bundle-install-path: 'vendor/bundle'
+- uses: actions/checkout@v2
+- uses: actions/setup-ruby@v1
+  with:
+    ruby-version: '>= 2.6'
+- uses maierj/fastlane-action@v2.0.0
+  with:
+    lane: 'beta'
+    subdirectory: 'ios'
+    bundle-install-path: 'vendor/bundle'
 ```
 ## Support & Limitations
 

@@ -102,18 +102,7 @@ function installBundlerIfNeeded() {
 }
 
 function installUsingRubyGems(packageName) {
-    setupRubyGemsIfNecessary();
-
     shell.exec(`sudo gem install ${packageName}`);
-}
-
-function setupRubyGemsIfNecessary() {
-    if (!shell.which("gem")) {
-        const rubyInstallationDirectory = tc.find('Ruby', '>= 2.6');
-        const rubyBinaryDirectory = `${rubyInstallationDirectory}/bin`;
-
-        core.addPath(rubyBinaryDirectory);
-    }
 }
 
 function configureBundler(customInstallPath) {
