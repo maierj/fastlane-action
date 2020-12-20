@@ -18,7 +18,7 @@
     "@actions/github": "^1.1.0",
     "@actions/tool-cache": "^1.1.2",
     "googleapis": "^39.2.0",
-    "npm": "^6.13.2",
+    "npm": "^6.14.6",
     "shelljs": "^0.8.3"
   }
 }
