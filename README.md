@@ -42,7 +42,7 @@ Basic usage for executing a lane in the root directory without arguments.
 - uses: actions/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
-- uses: maierj/fastlane-action@v2.0.0
+- uses: maierj/fastlane-action@v2.0.1
   with:
     lane: 'beta'
 ```
@@ -58,7 +58,7 @@ the workflow step should look like
 - uses: actions/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
-- uses: maierj/fastlane-action@v2.0.0
+- uses: maierj/fastlane-action@v2.0.1
   with:
     lane: 'beta'
     options: '{ "option1": "value1", "option2": "value2" }'
@@ -71,7 +71,7 @@ Usage for executing a lane in a context where the fastlane folder is in a subdir
 - uses: actions/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
-- uses: maierj/fastlane-action@v2.0.0
+- uses: maierj/fastlane-action@v2.0.1
   with:
     lane: 'beta'
     subdirectory: 'ios'
@@ -84,7 +84,7 @@ Speed up execution time of your workflow by specifying a custom directory where 
 - uses: actions/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
-- uses maierj/fastlane-action@v2.0.0
+- uses maierj/fastlane-action@v2.0.1
   with:
     lane: 'beta'
     subdirectory: 'ios'
