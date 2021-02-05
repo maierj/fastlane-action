@@ -8,8 +8,8 @@ This action executes the lane that is passed.
 Since there were various issues with the hardcoded ruby version inside this action, I decided to hand over the responsibility of setting up the ruby version to the user of this action.
 So, if you were previously using this action without a setup-ruby step preceding this action, you have to add the setup-ruby step as soon as you migrate to version 2.0.0.
 ~~If you don't want the behaviour to change, you can specify ruby-version >= 2.6, since that was the version that was hardcoded in versions < 2.0.0 of this action.~~ If you don't have
-any special requirements when it comes to your ruby version, I would recommend using `2.7.2`. Since December 2020, there is a new major version of Ruby available, but fastlane does not support that yet.
-You can keep an eye on [this issue](https://github.com/fastlane/fastlane/issues/17931) to see when that changes.
+any special requirements when it comes to your ruby version, I would recommend using `2.7.2`. Since December 2020, there is a new major version of Ruby available, but fastlane does not support that yet (see [this issue](https://github.com/maierj/fastlane-action/issues/64)).
+You can keep an eye on [this issue from the fastlane repo](https://github.com/fastlane/fastlane/issues/17931) to see when that changes.
 
 ## Inputs
 
