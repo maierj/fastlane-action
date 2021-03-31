@@ -84,7 +84,7 @@ Speed up execution time of your workflow by specifying a custom directory where 
 - uses: actions/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
-- uses maierj/fastlane-action@v2.0.1
+- uses: maierj/fastlane-action@v2.0.1
   with:
     lane: 'beta'
     subdirectory: 'ios'
