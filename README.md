@@ -7,9 +7,9 @@ This action executes the lane that is passed.
 ### :information_source: **Migration to 2.0.0.**
 Since there were various issues with the hardcoded ruby version inside this action, I decided to hand over the responsibility of setting up the ruby version to the user of this action.
 So, if you were previously using this action without a setup-ruby step preceding this action, you have to add the setup-ruby step as soon as you migrate to version 2.0.0.
-~~If you don't want the behaviour to change, you can specify ruby-version >= 2.6, since that was the version that was hardcoded in versions < 2.0.0 of this action.~~ If you don't have
+~~If you don't want the behaviour to change, you can specify ruby-version >= 2.6, since that was the version that was hardcoded in versions < 2.0.0 of this action. If you don't have
 any special requirements when it comes to your ruby version, I would recommend using `2.7.2`. Since December 2020, there is a new major version of Ruby available, but fastlane does not support that yet (see [this issue](https://github.com/maierj/fastlane-action/issues/64)).
-You can keep an eye on [this issue from the fastlane repo](https://github.com/fastlane/fastlane/issues/17931) to see when that changes.
+You can keep an eye on [this issue from the fastlane repo](https://github.com/fastlane/fastlane/issues/17931) to see when that changes.~~ Fastlane now also supports Ruby 3.
 
 ## Inputs
 
@@ -27,7 +27,11 @@ You can keep an eye on [this issue from the fastlane repo](https://github.com/fa
 
 ### `bundle-install-path`
 
-**Optional** The directory where Ruby gems should be installed to and cached. If a relative path is specified, it's applied relative to the location of the `Gemfiled`, which is either the project root or the directory from the `subdirectory` input option.
+**Optional** The directory where Ruby gems should be installed to and cached. If a relative path is specified, it's applied relative to the location of the `Gemfile`, which is either the project root or the directory from the `subdirectory` input option.
+
+### `verbose`
+
+**Optional** If set to true, adds the verbose option to the fastlane command for extended log output.
 
 ### `skip-tracking`
 
