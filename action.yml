@@ -14,6 +14,9 @@ inputs:
   bundle-install-path:
     description: "The directory where Ruby gems should be installed to and cached. If a relative path is specified, it's applied relative to the location of the Gemfile, which is either the project root or the directory from the `subdirectory` parameter."
     required: false
+  verbose:
+    description: "If set to true, adds the verbose option to the fastlane command for extended log output."
+    required: false
   skip-tracking:
     description: "The action tracks usage in Firebase by default. You can disable tracking by setting this parameter to 'true'."
     required: false

@@ -9,6 +9,7 @@ function run() {
         const optionsInput = core.getInput('options', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
+        const verbose = core.getInput('verbose', { required: false });
         const skipTracking = core.getInput('skip-tracking', { required: false });
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
@@ -61,6 +62,10 @@ function run() {
             if (Object.prototype.hasOwnProperty.call(deserializedOptions, optionKey)) {
                 fastlaneOptions.push(`${optionKey}:"${deserializedOptions[optionKey]}"`);
             }
+        }
+
+        if (verbose === "true") {
+            fastlaneOptions.push("--verbose");
         }
 
         let fastlaneExecutionResult;
