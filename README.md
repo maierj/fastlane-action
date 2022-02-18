@@ -37,6 +37,10 @@ You can keep an eye on [this issue from the fastlane repo](https://github.com/fa
 
 **Optional** The action tracks usage using Firebase by default (see [Tracking of usage statistics](https://github.com/maierj/fastlane-action#tracking-of-usage-statistics)). You can disable tracking by setting this input option to 'true'.
 
+### `env`
+
+**Optional** 
+
 ## Example usage
 
 Basic usage for executing a lane in the root directory without arguments.
