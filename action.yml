@@ -23,6 +23,9 @@ inputs:
   options:
     description: "The options that should be passed as arguments to the lane. The options should be serialized as a JSON object."
     required: false
+  env:
+    description: "The env value that should be passes as an argument to the lane. The value should match to one of your fastlane env files."
+    required: false
 runs:
   using: node12
   main: main.js
