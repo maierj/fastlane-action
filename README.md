@@ -110,7 +110,6 @@ Use the env option for fastlane env files:
 - uses: maierj/fastlane-action@v2.0.1
   with:
     lane: beta
-    subdirectory: ios
     env: staging
 ```
 ## Support & Limitations
