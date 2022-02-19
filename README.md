@@ -39,7 +39,7 @@ You can keep an eye on [this issue from the fastlane repo](https://github.com/fa
 
 ### `env`
 
-**Optional** 
+**Optional** If used, adds the env option to the fastlane command to use fastlane env files (see [Fastlane environment variables](https://docs.fastlane.tools/advanced/other/)).
 
 ## Example usage
 
@@ -97,6 +97,21 @@ Speed up execution time of your workflow by specifying a custom directory where 
     lane: 'beta'
     subdirectory: 'ios'
     bundle-install-path: 'vendor/bundle'
+```
+
+\
+Use the env option for fastlane env files:
+
+```
+- uses: actions/checkout@v2
+- uses: actions/setup-ruby@v1
+  with:
+    ruby-version: '2.7.2'
+- uses: maierj/fastlane-action@v2.0.1
+  with:
+    lane: beta
+    subdirectory: ios
+    env: staging
 ```
 ## Support & Limitations
 
