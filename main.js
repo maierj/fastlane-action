@@ -7,6 +7,7 @@ function run() {
     try {
         const lane = core.getInput('lane', { required: true });
         const optionsInput = core.getInput('options', { required: false });
+        const env = core.getInput('env', { required: false });
         const subdirectory = core.getInput('subdirectory', { required: false });
         const bundleInstallPath = core.getInput('bundle-install-path', { required: false });
         const verbose = core.getInput('verbose', { required: false });
@@ -66,6 +67,10 @@ function run() {
 
         if (verbose === "true") {
             fastlaneOptions.push("--verbose");
+        }
+
+        if (env && env.length > 0) {
+            fastlaneOptions.push(`--env ${env}`);
         }
 
         let fastlaneExecutionResult;

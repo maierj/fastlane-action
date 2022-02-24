@@ -37,6 +37,10 @@ You can keep an eye on [this issue from the fastlane repo](https://github.com/fa
 
 **Optional** The action tracks usage using Firebase by default (see [Tracking of usage statistics](https://github.com/maierj/fastlane-action#tracking-of-usage-statistics)). You can disable tracking by setting this input option to 'true'.
 
+### `env`
+
+**Optional** If used, adds the env option to the fastlane command to use fastlane env files (see [Fastlane environment variables](https://docs.fastlane.tools/advanced/other/)).
+
 ## Example usage
 
 Basic usage for executing a lane in the root directory without arguments.
@@ -93,6 +97,20 @@ Speed up execution time of your workflow by specifying a custom directory where 
     lane: 'beta'
     subdirectory: 'ios'
     bundle-install-path: 'vendor/bundle'
+```
+
+\
+Use the env option for fastlane env files:
+
+```
+- uses: actions/checkout@v2
+- uses: actions/setup-ruby@v1
+  with:
+    ruby-version: '2.7.2'
+- uses: maierj/fastlane-action@v2.0.1
+  with:
+    lane: beta
+    env: staging
 ```
 ## Support & Limitations
 
