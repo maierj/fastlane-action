@@ -4,13 +4,6 @@
 
 This action executes the lane that is passed.
 
-### :information_source: **Migration to 2.0.0.**
-Since there were various issues with the hardcoded ruby version inside this action, I decided to hand over the responsibility of setting up the ruby version to the user of this action.
-So, if you were previously using this action without a setup-ruby step preceding this action, you have to add the setup-ruby step as soon as you migrate to version 2.0.0.
-~~If you don't want the behaviour to change, you can specify ruby-version >= 2.6, since that was the version that was hardcoded in versions < 2.0.0 of this action. If you don't have
-any special requirements when it comes to your ruby version, I would recommend using `2.7.2`. Since December 2020, there is a new major version of Ruby available, but fastlane does not support that yet (see [this issue](https://github.com/maierj/fastlane-action/issues/64)).
-You can keep an eye on [this issue from the fastlane repo](https://github.com/fastlane/fastlane/issues/17931) to see when that changes.~~ Fastlane now also supports Ruby 3.
-
 ## Inputs
 
 ### `lane`
@@ -47,7 +40,7 @@ Basic usage for executing a lane in the root directory without arguments.
 
 ```
 - uses: actions/checkout@v2
-- uses: actions/setup-ruby@v1
+- uses: ruby/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
 - uses: maierj/fastlane-action@v2.0.1
@@ -63,7 +56,7 @@ fastlane beta option1:value1 option2:value2
 the workflow step should look like
 ```
 - uses: actions/checkout@v2
-- uses: actions/setup-ruby@v1
+- uses: ruby/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
 - uses: maierj/fastlane-action@v2.0.1
@@ -76,7 +69,7 @@ Usage for executing a lane in a context where the fastlane folder is in a subdir
 
 ```
 - uses: actions/checkout@v2
-- uses: actions/setup-ruby@v1
+- uses: ruby/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
 - uses: maierj/fastlane-action@v2.0.1
@@ -89,7 +82,7 @@ Speed up execution time of your workflow by specifying a custom directory where 
 
 ```
 - uses: actions/checkout@v2
-- uses: actions/setup-ruby@v1
+- uses: ruby/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
 - uses: maierj/fastlane-action@v2.0.1
@@ -104,7 +97,7 @@ Use the env option for fastlane env files:
 
 ```
 - uses: actions/checkout@v2
-- uses: actions/setup-ruby@v1
+- uses: ruby/setup-ruby@v1
   with:
     ruby-version: '2.7.2'
 - uses: maierj/fastlane-action@v2.0.1
