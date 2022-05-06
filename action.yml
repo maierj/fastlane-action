@@ -20,6 +20,7 @@ inputs:
   skip-tracking:
     description: "The action tracks usage in Firebase by default. You can disable tracking by setting this parameter to 'true'."
     required: false
+    default: "true"
   options:
     description: "The options that should be passed as arguments to the lane. The options should be serialized as a JSON object."
     required: false
