@@ -28,5 +28,5 @@ inputs:
     description: "The env value that should be passed as an argument to the lane. The value should match to one of your fastlane env files."
     required: false
 runs:
-  using: node12
+  using: node16
   main: main.js
