@@ -9,7 +9,7 @@
   "author": "maierj",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.9.1",
     "@actions/github": "^1.1.0",
     "@google-cloud/firestore": "^3.1.0",
     "canvas": "^2.6.1",
