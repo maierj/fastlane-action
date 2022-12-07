@@ -5,7 +5,10 @@
 This action executes the lane that is passed.
 
 ## Migration to v3
-* Usage move params to setup-ruby
+
+* The parameter `bundle-install-path` has been removed from this action. This parameter was mostly intended to enable caching of `bundle install` results.
+For that reason and also, because this action no longer installs the `Gemfile` dependencies, anyone using this action should set the `bundler-cache` parameter of the `ruby/setup-ruby` step to `true` (see [Example Usage](#example-usage)). 
+* If you are using the `subdirectory` of this action, you should also set the `working-directory` of `ruby/setup-ruby`, so the action is knows where to look for the `Gemfile`.
 
 ## Inputs
 
@@ -29,7 +32,7 @@ This action executes the lane that is passed.
 
 **Optional** If used, adds the env option to the fastlane command to use fastlane env files (see [Fastlane environment variables](https://docs.fastlane.tools/advanced/other/)).
 
-## Example usage
+## Example Usage
 
 Basic usage for executing a lane in the root directory without arguments.
 
@@ -38,6 +41,7 @@ Basic usage for executing a lane in the root directory without arguments.
 - uses: ruby/setup-ruby@v1
   with:
     ruby-version: '3.0'
+    bundler-cache: true
 - uses: maierj/fastlane-action@v3.0.0
   with:
     lane: 'beta'
@@ -91,4 +95,14 @@ Use the env option for fastlane env files:
 ```
 ## Support & Limitations
 
-The action supports macOS and ubuntu as virtual environments.
+The action generally supports 
+* `ubuntu-18.04`
+* `ubuntu-20.04`
+* `ubuntu-22.04`
+* `macOS-10.15`
+* `macOS-11`
+* `macOS-12`
+* `windows-2019`
+* `windows-2022`
+
+There may be further limitations depending on what your lanes are doing, but that's outside the scope of this action.
