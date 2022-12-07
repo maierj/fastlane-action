@@ -17,6 +17,10 @@ This action executes the lane that is passed.
 
 **Optional** The options that should be passed as arguments to the lane. The options should be serialized as a JSON object.
 
+### `subdirectory`
+
+**Optional** The relative path from the project root to the subdirectory where the fastlane folder is located.
+
 ### `verbose`
 
 **Optional** If set to true, adds the verbose option to the fastlane command for extended log output.
@@ -55,6 +59,21 @@ the workflow step should look like
   with:
     lane: 'beta'
     options: '{ "option1": "value1", "option2": "value2" }'
+```
+\
+Usage for executing a lane in a context where the fastlane folder is in a subdirectory called `ios`.
+
+```
+- uses: actions/checkout@v2
+- uses: ruby/setup-ruby@v1
+  with:
+    ruby-version: '3.0'
+    bundler-cache: true
+    working-directory: 'ios'
+- uses: maierj/fastlane-action@v3.0.0
+  with:
+    lane: 'beta'
+    subdirectory: 'ios'
 ```
 \
 Use the env option for fastlane env files:

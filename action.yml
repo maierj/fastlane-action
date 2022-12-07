@@ -8,6 +8,9 @@ inputs:
   lane:
     description: "The lane that should be executed."
     required: true
+  subdirectory:
+    description: "The relative path from the project root directory to the subdirectory where the fastlane folder is located."
+    required: false
   verbose:
     description: "If set to true, adds the verbose option to the fastlane command for extended log output."
     required: false

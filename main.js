@@ -1,14 +1,31 @@
 const core = require('@actions/core');
 const shell = require('shelljs');
+const fs = require('fs');
 
 function run() {
     try {
         const lane = core.getInput('lane', { required: true });
         const optionsInput = core.getInput('options', { required: false });
         const env = core.getInput('env', { required: false });
+        const subdirectory = core.getInput('subdirectory', { required: false });
         const verbose = core.getInput('verbose', { required: false });
 
         console.log(`Executing lane ${lane} on ${process.env.RUNNER_OS}.`);
+
+        if (subdirectory) {
+            if (subdirectory.startsWith("/")) {
+                setFailed(new Error("Specified subdirectory path is not relative."));
+                return;
+            }
+
+            if (fs.existsSync(`${process.cwd()}/${subdirectory}`)) {
+                console.log(`Moving to subdirectory ${subdirectory}`);
+                shell.cd(subdirectory);
+            } else {
+                setFailed(new Error(`Specified subdirectory ${subdirectory} does not exist.`));
+                return;
+            }
+        }
 
         let deserializedOptions;
         if (optionsInput) {
