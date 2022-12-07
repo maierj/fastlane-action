@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/google-p12-pem?activeTab=versions
 
+### [1.0.5](https://www.github.com/googleapis/google-p12-pem/compare/v1.0.4...v1.0.5) (2021-07-21)
+
+
+### Bug Fixes
+
+* **deps:** update node-forge to 0.10.0 ([#348](https://www.github.com/googleapis/google-p12-pem/issues/348)) ([a45a89d](https://www.github.com/googleapis/google-p12-pem/commit/a45a89da926706e4736ccced081a6f8fc6e1497b))
+
 ## v1.0.4
 
 03-12-2019 12:25 PDT
@@ -106,4 +113,3 @@ This is a service release very few updates.  The only interesting change is the 
 - chore(package): update @types/node to version 10.0.3 ([#34](https://github.com/google/google-p12-pem/pull/34))
 - chore: start testing on node 10 ([#36](https://github.com/google/google-p12-pem/pull/36))
 - chore(package): update @types/mocha to version 5.0.0 ([#33](https://github.com/google/google-p12-pem/pull/33))
-

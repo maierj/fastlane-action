@@ -1,6 +1,6 @@
 {
   "name": "de.maierjonas.fastlane-action",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A github action for executing fastlane lanes",
   "main": "main.js",
   "repository": {
