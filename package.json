@@ -15,7 +15,7 @@
   "homepage": "https://github.com/maierj/fastlane-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^1.1",
+    "@actions/github": "^6.0.0",
     "shelljs": "^0.8.5"
   }
 }
