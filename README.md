@@ -42,7 +42,7 @@ Basic usage for executing a lane in the root directory without arguments.
   with:
     ruby-version: '3.0'
     bundler-cache: true
-- uses: maierj/fastlane-action@v3.0.0
+- uses: maierj/fastlane-action@v3.1.0
   with:
     lane: 'beta'
 ```
@@ -59,7 +59,7 @@ the workflow step should look like
   with:
     ruby-version: '3.0'
     bundler-cache: true
-- uses: maierj/fastlane-action@v3.0.0
+- uses: maierj/fastlane-action@v3.1.0
   with:
     lane: 'beta'
     options: '{ "option1": "value1", "option2": "value2" }'
@@ -74,7 +74,7 @@ Usage for executing a lane in a context where the fastlane folder is in a subdir
     ruby-version: '3.0'
     bundler-cache: true
     working-directory: 'ios'
-- uses: maierj/fastlane-action@v3.0.0
+- uses: maierj/fastlane-action@v3.1.0
   with:
     lane: 'beta'
     subdirectory: 'ios'
@@ -88,7 +88,7 @@ Use the env option for fastlane env files:
   with:
     ruby-version: '3.0'
     bundler-cache: true
-- uses: maierj/fastlane-action@v3.0.0
+- uses: maierj/fastlane-action@v3.1.0
   with:
     lane: beta
     env: staging
