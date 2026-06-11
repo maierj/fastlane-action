@@ -40,9 +40,9 @@ Basic usage for executing a lane in the root directory without arguments.
 - uses: actions/checkout@v3
 - uses: ruby/setup-ruby@v1
   with:
-    ruby-version: '3.0'
+    ruby-version: '3.4'
     bundler-cache: true
-- uses: maierj/fastlane-action@v3.1.0
+- uses: maierj/fastlane-action@v3.2.0
   with:
     lane: 'beta'
 ```
@@ -57,9 +57,9 @@ the workflow step should look like
 - uses: actions/checkout@v3
 - uses: ruby/setup-ruby@v1
   with:
-    ruby-version: '3.0'
+    ruby-version: '3.4'
     bundler-cache: true
-- uses: maierj/fastlane-action@v3.1.0
+- uses: maierj/fastlane-action@v3.2.0
   with:
     lane: 'beta'
     options: '{ "option1": "value1", "option2": "value2" }'
@@ -71,10 +71,10 @@ Usage for executing a lane in a context where the fastlane folder is in a subdir
 - uses: actions/checkout@v2
 - uses: ruby/setup-ruby@v1
   with:
-    ruby-version: '3.0'
+    ruby-version: '3.4'
     bundler-cache: true
     working-directory: 'ios'
-- uses: maierj/fastlane-action@v3.1.0
+- uses: maierj/fastlane-action@v3.2.0
   with:
     lane: 'beta'
     subdirectory: 'ios'
@@ -86,23 +86,10 @@ Use the env option for fastlane env files:
 - uses: actions/checkout@v3
 - uses: ruby/setup-ruby@v1
   with:
-    ruby-version: '3.0'
+    ruby-version: '3.4'
     bundler-cache: true
-- uses: maierj/fastlane-action@v3.1.0
+- uses: maierj/fastlane-action@v3.2.0
   with:
     lane: beta
     env: staging
 ```
-## Support & Limitations
-
-The action generally supports 
-* `ubuntu-18.04`
-* `ubuntu-20.04`
-* `ubuntu-22.04`
-* `macOS-10.15`
-* `macOS-11`
-* `macOS-12`
-* `windows-2019`
-* `windows-2022`
-
-There may be further limitations depending on what your lanes are doing, but that's outside the scope of this action.
