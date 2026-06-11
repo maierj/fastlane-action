@@ -11,7 +11,7 @@ jobs:
     name: Trigger the main workflow of the test repository.
     steps:
       - name: Create dispatch event
-        uses: actions/github-script@0.2.0
+        uses: actions/github-script@v9.0.0
         with:
           github-token: ${{ secrets.TEST_REPO_ACCESS_TOKEN }}
           script: |
