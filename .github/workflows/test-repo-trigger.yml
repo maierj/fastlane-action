@@ -7,7 +7,7 @@ on:
 
 jobs:
   test_repo_trigger_job:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     name: Trigger the main workflow of the test repository.
     steps:
       - name: Create dispatch event

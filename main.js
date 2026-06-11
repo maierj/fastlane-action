@@ -1,8 +1,8 @@
-const core = require('@actions/core');
 const shell = require('shelljs');
 const fs = require('fs');
 
-function run() {
+async function run() {
+    const core = await import('@actions/core');
     try {
         const lane = core.getInput('lane', { required: true });
         const optionsInput = core.getInput('options', { required: false });
@@ -14,7 +14,7 @@ function run() {
 
         if (subdirectory) {
             if (subdirectory.startsWith("/")) {
-                setFailed(new Error("Specified subdirectory path is not relative."));
+                setFailed(core, new Error("Specified subdirectory path is not relative."));
                 return;
             }
 
@@ -22,7 +22,7 @@ function run() {
                 console.log(`Moving to subdirectory ${subdirectory}`);
                 shell.cd(subdirectory);
             } else {
-                setFailed(new Error(`Specified subdirectory ${subdirectory} does not exist.`));
+                setFailed(core, new Error(`Specified subdirectory ${subdirectory} does not exist.`));
                 return;
             }
         }
@@ -32,7 +32,7 @@ function run() {
             try {
                 deserializedOptions = JSON.parse(optionsInput);
             } catch(e) {
-                setFailed(new Error(`Input value "options" cannot be parsed into a JSON object.`));
+                setFailed(core, new Error(`Input value "options" cannot be parsed into a JSON object.`));
                 return;
             }
         } else {
@@ -63,14 +63,19 @@ function run() {
         }
 
         if (fastlaneExecutionResult.code !== 0) {
-            setFailed(new Error(`Executing lane ${lane} failed.`));
+            setFailed(core, new Error(`Executing lane ${lane} failed.`));
         }
     } catch (error) {
-        setFailed(error);
+        if (typeof core !== 'undefined') {
+            setFailed(core, error);
+        } else {
+            console.error(error);
+            process.exitCode = 1;
+        }
     }
 }
 
-function setFailed(error) {
+function setFailed(core, error) {
     core.error(error);
     core.setFailed(error.message);
 }
